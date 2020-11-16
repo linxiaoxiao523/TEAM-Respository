@@ -1,28 +1,34 @@
 <template>
-	<view class="container">
-		<view class="intro">本项目已包含uni ui组件，无需import和注册，可直接使用。在代码区键入字母u，即可通过代码助手列出所有可用组件。光标置于组件名称处按F1，即可查看组件文档。</view>
-		<text class="intro">详见：</text>
-		<uni-link :href="href" :text="href"></uni-link>
-	</view>
+	<view class="content">
+	        
+	        <view class="uni-padding-wrap">
+	            <view class="uni-common-mt" style="background:#a8a8a4; padding:20rpx;">
+	                <rich-text :nodes="nodes"></rich-text>
+	            </view>
+	        </view>
+	    </view>
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
-				href: 'https://uniapp.dcloud.io/component/README?id=uniui'
-			}
-		},
-		methods: {
-
-		}
-	}
+export default {
+    data() {
+        return {
+            nodes: [{
+                name: 'div',
+                attrs: {
+                    class: 'div-class',
+                    style: 'line-height: 35px; color:black; text-align:center;'
+                },
+                children: [{
+                    type: 'text',
+                    text: '今日食谱'
+                }]
+            }],
+        }
+    }
+}
 </script>
 
 <style>
-	.container {
-		padding: 20px;
-		font-size: 14px;
-		line-height: 24px;
-	}
+	
 </style>
