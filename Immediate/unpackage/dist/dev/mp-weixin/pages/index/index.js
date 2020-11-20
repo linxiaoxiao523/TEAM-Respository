@@ -102,6 +102,12 @@ __webpack_require__.r(__webpack_exports__);
 var components = {
   uniCard: function() {
     return __webpack_require__.e(/*! import() | components/uni-card/uni-card */ "components/uni-card/uni-card").then(__webpack_require__.bind(null, /*! @/components/uni-card/uni-card.vue */ 21))
+  },
+  uniList: function() {
+    return __webpack_require__.e(/*! import() | components/uni-list/uni-list */ "components/uni-list/uni-list").then(__webpack_require__.bind(null, /*! @/components/uni-list/uni-list.vue */ 28))
+  },
+  uniListItem: function() {
+    return __webpack_require__.e(/*! import() | components/uni-list-item/uni-list-item */ "components/uni-list-item/uni-list-item").then(__webpack_require__.bind(null, /*! @/components/uni-list-item/uni-list-item.vue */ 35))
   }
 }
 var render = function() {
@@ -227,8 +233,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 var _default =
 {
 
@@ -242,10 +246,14 @@ var _default =
 
         children: [{
           type: 'text',
-          text: '今日食谱' }] }] };
+          text: '今日食谱' }] }],
 
 
 
+      num1: '能量',
+
+      // text:"1",
+      fname: "" };
 
   },
   methods: {
@@ -257,6 +265,9 @@ var _default =
       // 	showCancel: false
       // });
     },
+    input: function input(event) {
+      this.fname = event.target.value;
+    },
     get: function get() {
       uni.showLoading({
         title: '处理中...' });
@@ -264,13 +275,14 @@ var _default =
       uniCloud.callFunction({
         name: 'get',
         data: {
-          fname: formdata } }).
+          fname: this.fname } }).
 
       then(function (res) {
         uni.hideLoading();
         uni.showModal({
           content: "\u67E5\u8BE2\u6210\u529F\uFF0C\u83B7\u53D6\u6570\u636E\u5217\u8868\u4E3A\uFF1A".concat(JSON.stringify(res.result.data)),
           showCancel: false });
+
 
         console.log(res);
       }).catch(function (err) {
