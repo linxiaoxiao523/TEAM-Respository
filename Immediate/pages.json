@@ -1,14 +1,17 @@
 {
+	"easycom": {
+			"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
+		},
 	"pages": [{
-		"path": "pages/index/index",
+		"path": "pages/custom_recipe/custom_recipe",
 		"style": {
-			"navigationBarTitleText": "uni-ui基础项目"
+			"navigationBarTitleText": "食谱"
 		}
 	}],
 	"globalStyle": {
-		"navigationBarTextStyle": "white",
+		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#007AFF",
+		"navigationBarBackgroundColor": "#FFFFFF",
 		"backgroundColor": "#FFFFFF"
 	}
 }
