@@ -26,7 +26,7 @@
 						    <uni-list-item title="能量"  ></uni-list-item>
 						    <uni-list-item  title="脂肪"></uni-list-item>
 							<uni-list-item title="碳水化合物" ></uni-list-item>
-							<uni-list-item  title="蛋白质" rightText="1" ></uni-list-item></uni-list>
+							<uni-list-item  title="蛋白质"  ></uni-list-item></uni-list>
 						
 					</view>
 				</uni-card>
@@ -36,7 +36,7 @@
 				<uni-card class="card" isShadow="true" scroll-y="true">
 					<form @submit="formSubmit" @reset="formReset">
 						<view class="uni-form-item uni-column">
-							<input class="uni-input" name="input" @v-model="fname" @input="input" placeholder="输入早餐" style="background:#d3dad9;" />
+							<input class="uni-input" name="input" @v-model="fname" @input="input" placeholder="输入午餐" style="background:#d3dad9;" />
 							<view class="space" style="height: 10px;"></view>
 						</view>
 						<view class="uni-btn-v">
@@ -50,7 +50,7 @@
 						    <uni-list-item title="能量"  ></uni-list-item>
 						    <uni-list-item  title="脂肪"></uni-list-item>
 							<uni-list-item title="碳水化合物" ></uni-list-item>
-							<uni-list-item  title="蛋白质" rightText="1" ></uni-list-item></uni-list>
+							<uni-list-item  title="蛋白质"  ></uni-list-item></uni-list>
 						
 					</view>
 				</uni-card>
@@ -61,7 +61,7 @@
 				<uni-card class="card" isShadow="true" scroll-y="true">
 					<form @submit="formSubmit" @reset="formReset">
 						<view class="uni-form-item uni-column">
-							<input class="uni-input" name="input" @v-model="fname" @input="input" placeholder="输入早餐" style="background:#d3dad9;" />
+							<input class="uni-input" name="input" @v-model="fname" @input="input" placeholder="输入晚餐" style="background:#d3dad9;" />
 							<view class="space" style="height: 10px;"></view>
 						</view>
 						<view class="uni-btn-v">
@@ -75,7 +75,7 @@
 						    <uni-list-item title="能量"  ></uni-list-item>
 						    <uni-list-item  title="脂肪"></uni-list-item>
 							<uni-list-item title="碳水化合物" ></uni-list-item>
-							<uni-list-item  title="蛋白质" rightText="1" ></uni-list-item></uni-list>
+							<uni-list-item  title="蛋白质"  ></uni-list-item></uni-list>
 						
 					</view>
 				</uni-card>
@@ -180,38 +180,32 @@
 	.sonfood{
 		display: flex;
 		flex-direction: row;
-		flex-grow:3;
+		width:100%;
+		
 		align-items:center;
 		text-align: center;
 	}
-	.breakfast {
-		display: flex;
-		flex-direction: row;
-		
-		align-items:center;
-		
-	}
+	
 	.card {
 		display: flex;
 		flex-direction: column;
+		width:100%;
 		align-items:center;
 		text-align: center;
 		
-		
-		
 	}
 
-	
 	.number{
 		display: flex;
 		flex-direction: row;
 		align-items: center;
 		
 	}
+	
 	.list{
 		display: flex;
 		flex-direction: row;
-		align-items: flex-start; 
+		align-items: center; 
 		text-align: left;
 	
 		}
