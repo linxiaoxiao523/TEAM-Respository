@@ -1,4 +1,5 @@
 {
-  "navigationBarTitleText": "Immediate",
-  "usingComponents": {}
+  "usingComponents": {
+    "uni-card": "/components/uni-card/uni-card"
+  }
 }
