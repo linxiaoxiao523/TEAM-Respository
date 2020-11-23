@@ -1,0 +1,20 @@
+{
+    "food": {
+        "data": [
+            {
+                "fname": "番茄牛腩",
+                "energy": "639.9KJ",
+                "protein": "27.3g",
+                "fat": "47.8g",
+                "carbohydrate": "26.6g"
+            },
+            {
+                "fname": "番茄牛肉",
+                "energy": "639.9KJ",
+                "protein": "27.3g",
+                "fat": "47.8g",
+                "carbohydrate": "26.6g"
+            }
+        ]
+    }
+}
