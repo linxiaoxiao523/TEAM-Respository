@@ -52,7 +52,7 @@
 		}, {
 			"path": "pages/result/result",
 			"style": {
-				"navigationBarTitleText": "成果",
+				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false
 			}
 

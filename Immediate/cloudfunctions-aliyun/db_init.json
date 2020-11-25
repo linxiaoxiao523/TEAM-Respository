@@ -1,20 +1,243 @@
 {
-    "food": {
+    "article": {
+        "data": [],
+        "schema": {
+            "bsonType": "object",
+            "required": [
+                "openid"
+            ],
+            "permission": {
+                "read": true,
+                "create": true,
+                "update": true,
+                "delete": true
+            },
+            "properties": {
+                "_id": {
+                    "description": "ID，系统自动生成"
+                },
+                "openid": {
+                    "bsonType": "string"
+                },
+                "title": {
+                    "bsonType": "string"
+                },
+                "body": {
+                    "bsonType": "string"
+                },
+                "time": {
+                    "bsonType": "string"
+                },
+                "tapnum": {
+                    "bsonType": "int"
+                },
+                "picture": {
+                    "nsonType": "string"
+                }
+            }
+        }
+    },
+    "food_today": {
+        "data": [],
+        "schema": {
+            "bsonType": "object",
+            "required": [
+                "openid"
+            ],
+            "permission": {
+                "read": true,
+                "create": true,
+                "update": true,
+                "delete": true
+            },
+            "properties": {
+                "_id": {
+                    "description": "ID，系统自动生成"
+                },
+                "breakfast": {
+                    "bsonType": "string"
+                },
+                "lunch": {
+                    "bsonType": "string"
+                },
+                "dinner": {
+                    "bsonType": "string"
+                },
+                "calorie": {
+                    "bsonType": "double"
+                }
+            }
+        }
+    },
+    "ingredients": {
+        "data": [],
+        "schema": {
+            "bsonType": "object",
+            "required": [
+                "openid"
+            ],
+            "permission": {
+                "read": true,
+                "create": true,
+                "update": true,
+                "delete": true
+            },
+            "properties": {
+                "_id": {
+                    "description": "ID，系统自动生成"
+                },
+                "openid": {
+                    "bsonType": "string"
+                },
+                "name": {
+                    "bsonType": "string"
+                },
+                "category": {
+                    "bsonType": "string"
+                },
+                "num": {
+                    "bsonType": "int"
+                }
+            }
+        }
+    },
+    "recipes": {
+        "data": [],
+        "schema": {
+            "bsonType": "object",
+            "required": [
+                "openid"
+            ],
+            "permission": {
+                "read": true,
+                "create": true,
+                "update": true,
+                "delete": true
+            },
+            "properties": {
+                "_id": {
+                    "description": "ID，系统自动生成"
+                },
+                "openid": {
+                    "bsonType": "string"
+                },
+                "foodname": {
+                    "bsonType": "string"
+                },
+                "num": {
+                    "bsonType": "double"
+                },
+                "introduction": {
+                    "bsonType": "string"
+                },
+                "picture": {
+                    "bsonType": "string"
+                }
+            }
+        }
+    },
+    "timer": {
+        "data": [],
+        "schema": {
+            "bsonType": "object",
+            "required": [
+                "openid"
+            ],
+            "permission": {
+                "read": true,
+                "create": true,
+                "update": true,
+                "delete": true
+            },
+            "properties": {
+                "_id": {
+                    "description": "ID，系统自动生成"
+                },
+                "openid": {
+                    "bsonType": "string"
+                },
+                "date": {
+                    "bsonType": "string"
+                },
+                "category": {
+                    "bsonType": "string"
+                },
+                "time": {
+                    "bsonType": "double"
+                },
+                "calorie": {
+                    "bsonType": "double"
+                }
+            }
+        }
+    },
+    "user": {
         "data": [
             {
-                "fname": "番茄牛腩",
-                "energy": "639.9KJ",
-                "protein": "27.3g",
-                "fat": "47.8g",
-                "carbohydrate": "26.6g"
-            },
-            {
-                "fname": "番茄牛肉",
-                "energy": "639.9KJ",
-                "protein": "27.3g",
-                "fat": "47.8g",
-                "carbohydrate": "26.6g"
+                "nickname": "FFantasy",
+                "openid": "oeZTA4rNsITa1jqJ7guSMSGwDAt0"
             }
-        ]
+        ],
+        "schema": {
+            "bsonType": "object",
+            "required": [
+                "openid"
+            ],
+            "permission": {
+                "read": true,
+                "create": true,
+                "update": true,
+                "delete": true
+            },
+            "properties": {
+                "_id": {
+                    "description": "ID，系统自动生成"
+                },
+                "openid": {
+                    "bsonType": "string"
+                },
+                "nickname": {
+                    "bsonType": "string"
+                },
+                "height": {
+                    "bsonType": "double"
+                },
+                "weight": {
+                    "bsonType": "double"
+                },
+                "wish_weight": {
+                    "bsonType": "double"
+                },
+                "sex": {
+                    "bsonType": "string"
+                }
+            }
+        }
+    },
+    "user_weight": {
+        "data": [],
+        "schema": {
+            "bsonType": "object",
+            "required": [
+                "openid"
+            ],
+            "permission": {
+                "read": true,
+                "create": true,
+                "update": true,
+                "delete": true
+            },
+            "properties": {
+                "_id": {
+                    "description": "ID，系统自动生成"
+                },
+                "date": {
+                    "bsonType": "string"
+                },
+                "weight": {
+                    "bsonType": "double"
+                }
+            }
+        }
     }
 }
