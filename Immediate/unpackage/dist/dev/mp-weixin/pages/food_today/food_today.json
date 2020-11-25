@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "食谱记录",
+  "usingComponents": {
+    "u-tabs": "/uview-ui/components/u-tabs/u-tabs",
+    "uni-card": "/components/uni-card/uni-card",
+    "uni-list": "/components/uni-list/uni-list",
+    "uni-list-item": "/components/uni-list-item/uni-list-item",
+    "u-tabbar": "/uview-ui/components/u-tabbar/u-tabbar"
+  }
+}

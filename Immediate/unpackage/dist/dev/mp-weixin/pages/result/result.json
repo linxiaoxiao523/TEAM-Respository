@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "成果",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "u-tabbar": "/uview-ui/components/u-tabbar/u-tabbar",
+    "u-tabs": "/uview-ui/components/u-tabs/u-tabs",
+    "u-grid": "/uview-ui/components/u-grid/u-grid",
+    "u-grid-item": "/uview-ui/components/u-grid-item/u-grid-item"
+  }
+}

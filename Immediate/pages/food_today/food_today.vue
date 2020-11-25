@@ -2,15 +2,15 @@
 	<view class="content">
 
 		<view class="food_today">
-			<view class="uni-common-mt" style="background:#ffc2f7; padding:20rpx;">
+			<view class="uni-common-mt" style="padding:20rpx;">
+				<u-tabs :list="pageList" :is-scroll="false" :current="currentPage" @change="changePage"></u-tabs>
 				<rich-text :nodes="nodes"></rich-text>
 			</view>
 		</view>
 
-		<view class='food'>
-			<view class='breakfast' style="background:#aaffff;padding:20rpx;height:170px;">
-				<text style=" text-align:center;padding:20rpx;">早餐</text>
-				<uni-card class="card1" isShadow="true">
+		<view class="food">
+			<view class="sonfood" style="background:#55aaff">
+				<uni-card class="card" isShadow="true" scroll-y="true">
 					<form @submit="formSubmit" @reset="formReset">
 						<view class="uni-form-item uni-column">
 							<input class="uni-input" name="input" @v-model="fname" @input="input" placeholder="输入早餐" style="background:#d3dad9;" />
@@ -22,53 +22,23 @@
 						</view>
 					</form>
 					<!-- <view class="space" style="height: 10px;"></view> -->
-					<view class="number" >
-					<text>能量：636.9 KJ</text>
-						<view class="space" style="height: 5px;"></view>
-						<text>脂肪：47.8 g</text>
-						<view class="space" style="height: 5px;"></view>
-						<text>蛋白质: 27.3 g</text>
-						<view class="space" style="height: 5px;"></view>
-						<text>碳水化合物：26.6 g</text>
-					<view class="text-box" scroll-y="true">
-						<text>{{num1}}</text>
-					</view>
-					</view>
-				</uni-card>
-
-			</view>
-			<view class='lunch' style="background:#61c3ff;padding:20rpx;height:170px;">
-				<text style=" text-align:center;padding:20rpx;">午餐</text>
-				<uni-card class="card2" isShadow="true">
-					<form @submit="formSubmit" @reset="formReset">
-						<view class="uni-form-item uni-column">
-
-							<input class="uni-input" @input="onKeyInput" placeholder="输入午餐" style="background:#d3dad9;" />
-							<view class="space" style="height: 10px;"></view>
-						</view>
-						<view class="uni-btn-v">
-							<button form-type="submit" type="primary" size="mini">Submit</button>
-							<!-- <button type="primary" form-type="reset" size="mini">Reset</button> -->
-						</view>
-					</form>
 					<view class="number">
-						<text>能量：</text>
-						<view class="space" style="height: 5px;"></view>
-						<text>脂肪：</text>
-						<view class="space" style="height: 5px;"></view>
-						<text>蛋白质: </text>
-						<view class="space" style="height: 5px;"></view>
-						<text>碳水化合物： </text>
+						<uni-list class="list">
+							<uni-list-item title="能量" rightText="135.17kcal"></uni-list-item>
+							<uni-list-item title="脂肪" rightText="6.21g"></uni-list-item>
+							<uni-list-item title="碳水化合物" rightText="12.96g"></uni-list-item>
+							<uni-list-item title="蛋白质" rightText="7.42g"></uni-list-item>
+						</uni-list>
+
 					</view>
 				</uni-card>
 			</view>
-			<view class='dinner' style="background:#aaaaff;padding:20rpx;height:170px;">
-				<text style=" text-align:center;padding:20rpx;">晚餐</text>
-				<uni-card class="card3" isShadow="true">
+
+			<view class="sonfood" style="background:#aaffff">
+				<uni-card class="card" isShadow="true" scroll-y="true">
 					<form @submit="formSubmit" @reset="formReset">
 						<view class="uni-form-item uni-column">
-
-							<input class="uni-input" @input="onKeyInput" placeholder="输入晚餐" style="background:#d3dad9;" />
+							<input class="uni-input" name="input" @v-model="fname" @input="input" placeholder="输入午餐" style="background:#d3dad9;" />
 							<view class="space" style="height: 10px;"></view>
 						</view>
 						<view class="uni-btn-v">
@@ -76,18 +46,50 @@
 							<!-- <button type="primary" form-type="reset" size="mini">Reset</button> -->
 						</view>
 					</form>
+					<!-- <view class="space" style="height: 10px;"></view> -->
 					<view class="number">
-						<text>能量： </text>
-						<view class="space" style="height: 5px;"></view>
-						<text>脂肪： </text>
-						<view class="space" style="height: 5px;"></view>
-						<text>蛋白质: </text>
-						<view class="space" style="height: 5px;"></view>
-						<text>碳水化合物： </text>
+						<uni-list class="list" >
+							<uni-list-item title="能量" showArrow="false"></uni-list-item>
+							<uni-list-item title="脂肪"  showArrow="false"></uni-list-item>
+							<uni-list-item title="碳水化合物" showArrow="false"></uni-list-item>
+							<uni-list-item title="蛋白质" showArrow="false"></uni-list-item>
+						</uni-list>
+
 					</view>
 				</uni-card>
+
+			</view>
+
+			<view class="sonfood" style="background:#aaaaff">
+				<uni-card class="card" isShadow="true" scroll-y="true">
+					<form @submit="formSubmit" @reset="formReset">
+						<view class="uni-form-item uni-column">
+							<input class="uni-input" name="input" @v-model="fname" @input="input" placeholder="输入晚餐" style="background:#d3dad9;" />
+							<view class="space" style="height: 10px;"></view>
+						</view>
+						<view class="uni-btn-v">
+							<button form-type="submit" type="primary" size="mini" @click="get">Submit</button>
+							<!-- <button type="primary" form-type="reset" size="mini">Reset</button> -->
+						</view>
+					</form>
+					<!-- <view class="space" style="height: 10px;"></view> -->
+					<view class="number">
+						<uni-list class="list">
+							<uni-list-item title="能量"></uni-list-item>
+							<uni-list-item title="脂肪"></uni-list-item>
+							<uni-list-item title="碳水化合物"></uni-list-item>
+							<uni-list-item title="蛋白质"></uni-list-item>
+						</uni-list>
+
+					</view>
+				</uni-card>
+
 			</view>
 		</view>
+		<div>
+			<u-tabbar v-model="current" :show="true" :bg-color="bgColor" :border-top="borderTop" :list="list" :inactive-color="inactiveColor"
+			 :activeColor="activeColor"></u-tabbar>
+		</div>
 	</view>
 </template>
 
@@ -96,22 +98,63 @@
 
 		data() {
 			return {
+				bgColor: "#ffffff",
+				pageList: [{
+					name: '食谱推荐'
+				}, {
+					name: '自定义食谱'
+				}, {
+					name: '每日记录'
+				}],
+				currentPage: 2,
 				nodes: [{
 					name: 'div',
 					attrs: {
 						class: 'div-class',
 						style: 'line-height: 35px; color:black; text-align:center;'
 					},
-					children: [{
-						type: 'text',
-						text: '今日食谱'
-					}]
+					// children: [{
+					// 	type: 'text',
+					// 	text: '今日食谱'
+					// }]
 				}],
 
 				num1: '能量',
 
 				// text:"1",
-				fname: ""
+				fname: "",
+				current: 2,
+				list: [{
+						iconPath: "https://s3.ax1x.com/2020/11/20/DMMQC4.png",
+						selectedIconPath: "https://s3.ax1x.com/2020/11/20/DMMl8J.png",
+						text: '主页',
+						isDot: true,
+						customIcon: false,
+						pagePath: "/pages/index/index" //主页页面地址
+					},
+					{
+						iconPath: "https://s3.ax1x.com/2020/11/20/DMMJDx.png",
+						selectedIconPath: "https://s3.ax1x.com/2020/11/20/DMMYb6.png",
+						text: '锻炼',
+						customIcon: false,
+						pagePath: "/pages/clock/clock" //锻炼页面地址
+					},
+					{
+						iconPath: "https://s3.ax1x.com/2020/11/20/DMMGK1.png",
+						selectedIconPath: "",
+						text: '食谱',
+						customIcon: false,
+						pagePath: "/pages/food_menu/food_menu" //食谱页面地址
+					},
+					{
+						iconPath: "https://s3.ax1x.com/2020/11/20/DMM3vR.png",
+						selectedIconPath: "https://s3.ax1x.com/2020/11/20/DMM129.png",
+						text: '成果',
+						isDot: false,
+						customIcon: false,
+						pagePath: "/pages/result/result" //成果页面地址
+					},
+				],
 			}
 		},
 		methods: {
@@ -125,6 +168,22 @@
 			},
 			input: function(event) {
 				this.fname = event.target.value
+			},
+			changePage(index) {
+				console.log(index);
+				if (index == 0) {
+					uni.switchTab({
+						url: "/pages/food_menu/food_menu"
+					});
+				} else if (index == 1) {
+					uni.navigateTo({
+						url: "/pages/food_custom/food_custom"
+					});
+				} else if (index == 2) {
+					uni.navigateTo({
+						url: "/pages/food_today/food_today"
+					});
+				}
 			},
 			get() {
 				uni.showLoading({
@@ -177,63 +236,42 @@
 	.food {
 		display: flex;
 		flex-direction: column;
-		align-items: center;
+		flex-grow:3;
+		align-items:center;
 		text-align: center;
 
 	}
+	.sonfood{
+		display: flex;
+		flex-direction: row;
+		width:100%;
+		
+		align-items:center;
+		text-align: center;
+	}
+	
+	.card {
+		display: flex;
+		flex-direction: column;
+		width:100%;
+		align-items:center;
+		text-align: center;
+		
+	}
 
-	.breakfast {
+	.number{
 		display: flex;
 		flex-direction: row;
 		align-items: center;
-		text-align: center;
+		
 	}
-
-	.lunch {
+	
+	.list{
 		display: flex;
 		flex-direction: row;
-		align-items: center;
-		text-align: center;
-	}
-
-	.dinner {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		text-align: center;
-	}
-
-	.card1 {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		text-align: center;
-		height: 170px;
-		width: 295px;
-		padding: 20rpx;
-		align-self: center;
-
-	}
-
-	.card2 {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		text-align: center;
-		height: 170px;
-		width: 295px;
-		padding: 20rpx;
-		align-self: center;
-	}
-
-	.card3 {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		text-align: center;
-		height: 170px;
-		width: 295px;
-		padding: 20rpx;
-		align-self: center;
-	}
+		align-items: center; 
+		text-align: left;
+	
+		}
+	
 </style>
