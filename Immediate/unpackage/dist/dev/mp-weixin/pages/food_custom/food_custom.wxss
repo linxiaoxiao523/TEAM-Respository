@@ -1,0 +1,14 @@
+
+.container {
+	padding: 20px;
+	font-size: 14px;
+	line-height: 24px;
+}
+.foodName {
+	width: 65%;
+	float: left;
+}
+.inputNumber {
+	float: right;
+}
+

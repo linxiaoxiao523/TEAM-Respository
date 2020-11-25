@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "首页",
+  "usingComponents": {
+    "u-row": "/uview-ui/components/u-row/u-row",
+    "u-col": "/uview-ui/components/u-col/u-col",
+    "u-button": "/uview-ui/components/u-button/u-button",
+    "u-tabbar": "/uview-ui/components/u-tabbar/u-tabbar"
+  }
+}

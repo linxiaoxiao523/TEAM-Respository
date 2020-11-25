@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "自定义食谱",
+  "usingComponents": {
+    "u-tabs": "/uview-ui/components/u-tabs/u-tabs",
+    "u-collapse": "/uview-ui/components/u-collapse/u-collapse",
+    "u-collapse-item": "/uview-ui/components/u-collapse-item/u-collapse-item",
+    "u-number-box": "/uview-ui/components/u-number-box/u-number-box",
+    "u-button": "/uview-ui/components/u-button/u-button",
+    "u-tabbar": "/uview-ui/components/u-tabbar/u-tabbar"
+  }
+}

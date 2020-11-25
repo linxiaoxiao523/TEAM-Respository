@@ -1,0 +1,13 @@
+{
+  "navigationBarTitleText": "推文",
+  "usingComponents": {
+    "u-sticky": "/uview-ui/components/u-sticky/u-sticky",
+    "u-row": "/uview-ui/components/u-row/u-row",
+    "u-search": "/uview-ui/components/u-search/u-search",
+    "u-card": "/uview-ui/components/u-card/u-card",
+    "u-col": "/uview-ui/components/u-col/u-col",
+    "u-icon": "/uview-ui/components/u-icon/u-icon",
+    "u-back-top": "/uview-ui/components/u-back-top/u-back-top",
+    "u-tabbar": "/uview-ui/components/u-tabbar/u-tabbar"
+  }
+}
