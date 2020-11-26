@@ -1,38 +1,53 @@
 <template>
-	<view>
-		<u-tabbar v-model="current" :show="true" :bg-color="bgColor" :border-top="borderTop" :list="list" :inactive-color="inactiveColor"
-		:active-color="activeColor"></u-tabbar>
-		 
+	<view class="container">
+		
 		<u-tabs :list="listr" :is-scroll="false" :current="currentr" @change="changer">
 		</u-tabs>
-		
+		<!-- 
+		<u-tabbar v-model="current" :show="true" :bg-color="bgColor" :border-top="borderTop" :list="list" :inactive-color="inactiveColor"
+		:active-color="activeColor"></u-tabbar> -->
 	
 		<view class="qiun-charts" >
 			<canvas canvas-id="canvasLineA" id="canvasLineA" class="charts" @touchstart="touchLineA"></canvas>
-			<view style="text-align: center;line-height: 30rpx;font-size: 30rpx;">体重变化图</view>
-		</view>
+<!-- 			<view style="text-align: center;line-height: 30rpx;font-size: 30rpx;">体重变化图</view>
+ -->		</view>
+		<view class="bigpaper">
+			<view class="subtitle">
+				<text>信息登记表</text>
+			</view>
 		
-		<u-grid :col="2" bg-color="grey">
-			
-			<u-grid-item>
-				<view class="grid-text">开始时间:{{month}}月{{day}}日</view>
-			</u-grid-item>	
-			<u-grid-item>	
-				<view class="grid-text">原体重:{{for_weight}} kg</view>
-			</u-grid-item>
-			<u-grid-item>
-				<view class="grid-text">当前体重:{{now_weight}} kg</view>
-			</u-grid-item>
-			<u-grid-item>
-				<view class="grid-text">目标体重:{{goal_weight}} kg</view>
-			</u-grid-item>
+			<view class="paper">
+			<u-grid :col="2" bg-color="grey">
+				<u-grid-item>
+					<view class="grid-text">开始时间:{{month}}月{{day}}日</view>
+				</u-grid-item>	
+				<u-grid-item>	
+					<view class="grid-text">原体重:{{for_weight}} kg</view>
+				</u-grid-item>
+				<u-grid-item>
+					<view class="grid-text">当前体重:{{now_weight}} kg</view>
+				</u-grid-item>
+				<u-grid-item>
+					<view class="grid-text">目标体重:{{goal_weight}} kg</view>
+				</u-grid-item>
+				</u-grid>
+			<u-grid :col="1" bg-color="grey">
 			<u-grid-item>
 				<view class="grid-text">健康建议:{{advice}}</view>	
-			</u-grid-item>	
+			</u-grid-item>			
+			</u-grid>
+			</view>
 			
-		</u-grid>
-	</view>
+			<view class="blank">.
+				</view>
+			
+		</view>
 	
+		<view>
+			<u-tabbar v-model="current" :show="true" :bg-color="bgColor" :border-top="borderTop" :list="list" :inactive-color="inactiveColor"
+			:activeColor="activeColor"></u-tabbar>
+		</view>
+	</view>
 </template>
 <script>
 	import uCharts from '@/js_sdk/u-charts/u-charts/u-charts.js';
@@ -176,15 +191,65 @@
 		text-align: left;
 		font-size: 25rpx;
 		margin-top: 4rpx;
+		
 	}
 	.qiun-charts {
 		width: 750upx;
 		height: 500upx;
 		background-color: #FFFFFF;
+		
 	}
 	.charts {
 		width: 750upx;
 		height: 500upx;
 		background-color: #FFFFFF;
 	}
+	.u-tabs{
+		//height:50px;
+		//opacity:0.2;
+		//border-bottom:1px solid  #000000;
+		//border-top:1px solid  #000000;
+	}
+	.u-tabbar{
+		height:0px;
+		//opacity:0.2;
+		
+
+	} 
+	.container{
+		// background: linear-gradient(0deg, #5899ee, white,white,white);
+		//margin-bottom: 100%;
+		//border-bottom:1px solid  #000000;
+		border-top:5rpx solid #2979ff;
+		 height:auto;
+		// margin-bottom: 170%;
+		}
+	.bigpaper{
+		background: linear-gradient(0deg, #2979ff, white);
+		margin:0 0 -100% 0;
+		// border-radius: 20rpx;
+		
+	}
+	
+	
+	
+	.paper{
+		margin:14% 4% 0% 4%;
+		padding:-10% 2% 0% 2%;
+		border-radius: 30rpx;
+		position: relative;
+		border-color: rgba($color: #FFFFFF, $alpha: 0.5);
+		border-style:solid;
+		border-width:20rpx;
+		border-height:auto;
+		
+	}
+	.subtitle{
+		text-align: center;
+		font-size: 40rpx;
+		color: white;
+		font-weight:500;
+		
+	}
+	
 </style>
