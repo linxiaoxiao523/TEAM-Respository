@@ -1,0 +1,43 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/index/index",
+    "pages/food_custom/food_custom",
+    "pages/food_menu/food_menu",
+    "pages/article_list/article_list",
+    "pages/food_today/food_today",
+    "pages/clock/clock",
+    "pages/food_details/food_details",
+    "pages/result/result"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "backgroundColor": "#FFFFFF"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "主页"
+      },
+      {
+        "pagePath": "pages/clock/clock",
+        "text": "锻炼"
+      },
+      {
+        "pagePath": "pages/food_menu/food_menu",
+        "text": "食谱"
+      },
+      {
+        "pagePath": "pages/result/result",
+        "text": "成果"
+      }
+    ]
+  },
+  "permission": {},
+  "usingComponents": {},
+  "sitemapLocation": "sitemap95.json"
+}
