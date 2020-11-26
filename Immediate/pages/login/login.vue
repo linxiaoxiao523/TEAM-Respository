@@ -77,7 +77,7 @@
 											.where('openid == that.OpenId')
 											.get()
 											.then((res) => {
-												if (res.data.openid == null) {
+												if (res.openid == null) {
 													// const db = uniCloud.database();
 													db.collection('user').add({
 														nickname: nickName,
@@ -89,6 +89,8 @@
 											}).catch((err) => {
 												// err.message 错误信息
 												// err.code 错误码
+												console.log(err)
+												console.log(that.OpenId)
 											});
 
 

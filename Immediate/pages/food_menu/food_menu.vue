@@ -5,7 +5,7 @@
 		<view>
 			<uni-list id="onemenu" v-for="(item,index) in productList" :key="index">
 
-				<uni-list-item :thumb="item.picture" :title="item.title" :note="item.note" :show-arrow=false @click="articlechang">
+				<uni-list-item :thumb="item.picture" :title="item.title" :note="item.note" :show-arrow=false @click="articlechang(item.id)">
 					<button class="add">+</button>
 				</uni-list-item>
 
@@ -75,7 +75,7 @@
 					},
 				],
 				productList: [{
-						"id": "000001",
+						"id": "5fbfd35eff938a78a3bac5ab",
 						"title": "番茄牛腩",
 						"note": "食材：西红柿、牛腩、花椒粉等",
 						"热量": "135.17",
@@ -209,13 +209,14 @@
 				],
 			};
 		},
-		onLoad() {
-			// this.getList();
+		onLoad() {//获取数据库菜谱
 		},
 		methods: {
-			articlechang() {
+			articlechang(id) {
+				var menuid = JSON.stringify(id)
+				console.log(menuid);
 				uni.navigateTo({
-					url: "/pages/food_details/food_details"
+					url: "/pages/food_details/food_details?menuid="+menuid
 				})
 			},
 			changePage(index) {
