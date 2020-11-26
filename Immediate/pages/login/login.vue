@@ -12,11 +12,7 @@
 						</view>
 
 				</view>
-				<!-- <view class='content'>
-					<image class="logo" src="/static/tabs/logo.png">
-						<text>申请获得你的公开信息(昵称，头像等)</text>
-				</view>
- -->
+
 				<button class='login' type='primary' open-type="getUserInfo" withCredentials="true" lang="zh_CN" @getuserinfo="wxLogin">
 					授权登录
 				</button>
@@ -40,102 +36,83 @@
 		methods: {
 			wxLogin() {
 				let that = this;
-				uni.authorize({
-					scope: 'scope.userInfo',
-					success() {
-						
-						uni.getUserInfo({
-							provider: 'weixin',
-							success: function(wxLoginres) {
-								let nickName = wxLoginres.userInfo.nickName;
-								let openid= wxLoginres.userInfo.openid
-								let avatarUrl = wxLoginres.userInfo.avatarUrl;
-								uni.reLaunch({
+				uni.login({
+					success: res => {
+						//code值(5分钟失效)
+						console.info(res.code);
+						//小程序appid
+						let appid = 'wxcb70e32f42968687'; //我瞎写的
+						//小程序secret
+						let secret = '26e5c9d1b35ac21df0c0c9600886a266'; //我瞎写的
+						//wx接口路径
+						let url = 'https://api.weixin.qq.com/sns/jscode2session?appid=' + appid + '&secret=' + secret + '&js_code=' +
+							res.code + '&grant_type=authorization_code';
+						uni.request({
+							url: url, // 请求路径
+							method: 'GET', //请求方式
+							success: result => {
+								//响应成功
+								//这里就获取到了openid了
+
+								that.OpenId = result.data.openid;
+								uni.setStorage({
+									key: 'user',
+									data: result.data.openid
+								})
+							},
+							fail: err => {} //失败
+						});
+						uni.authorize({
+							scope: 'scope.userInfo',
+							success() {
+								uni.getUserInfo({
+									provider: 'weixin',
+									success: function(wxLoginres) {
+										let nickName = wxLoginres.userInfo.nickName;
+										// let openid = wxLoginres.userInfo.openid
+										let avatarUrl = wxLoginres.userInfo.avatarUrl;
+										let sex = wxLoginres.userInfo.sex;
+										const db = uniCloud.database();
+										db.collection('user')
+											.where('openid == that.OpenId')
+											.get()
+											.then((res) => {
+												if (res.data.openid == null) {
+													// const db = uniCloud.database();
+													db.collection('user').add({
+														nickname: nickName,
+														openid: that.OpenId,
+														sex: sex
+													})
+												};
+												// res 为数据库查询结果
+											}).catch((err) => {
+												// err.message 错误信息
+												// err.code 错误码
+											});
+
+
+										try {
+
+											uni.setStorageSync('isCanUse', false);
+
+
+											uni.reLaunch({
 												url: '/pages/index/index',
 											});
-								try {
-									uni.setStorageSync('isCanUse', false);
-									
-									that.updateUserInfo();
-									uni.reLaunch({
-													url: '/pages/index/index',
-												});
-								} catch (e) {}
-							},
-							fail(res) {
-								console.log(res)
+										} catch (e) {}
+									},
+									fail(res) {
+										console.log(res)
+									}
+								});
 							}
-						});
-					}
-				})
-			},
-			login() {
-				let that = this;
-				uni.showLoading({
-					title: '正在登陆...'
-				});
-				uni.login({
-					provider: 'weixin',
-					success: function(loginres) {
-						let code = loginres.code;
-						if (!that.isCanUse) {
-							uni.authorize({
-								scope: 'scope.userInfo',
-								success() {
-									uni.getUserInfo({
-										provider: 'weixin',
-										success: function(infoRes) {
-											//获取用户信息后向调用信息更新方法
-											let nickName = infoRes.userInfo.nickName; //昵称
-											let avatarUrl = infoRes.userInfo.avatarUrl; //头像
-											// uni.request({
-											// 	url: 'https://api.weixin.qq.com/sns/jscode2session?appid=wx21c6ab42cac35f45&secret=7933a91af160403c4c824e4192837ced&js_code=' +
-											// 		code + '&grant_type=authorization_code',
-											// 	data: {
-											// 		appKey: this.$store.state.appKey,
-											// 		customerId: that.customerId,
-											// 		nickName: that.nickName,
-											// 		headUrl: that.avatarUrl
-											// 	},
-											// 	method: 'POST',
-											// 	header: {
-											// 		'content-type': 'application/json'
-											// 	},
-											// 	success: (res) => {
-											// 		if (res.data.state == 'success') {
-											// 			uni.reLaunch({
-											// 				url: '/pages/index/index',
-											// 			});
-											// 		}
-											// 	}
-											// })
-										}
-									});
-								}
-							})
-
-						}
-						// uni.request({
-						// 	url: 'https://api.weixin.qq.com/sns/jscode2session?appid=wx21c6ab42cac35f45&secret=7933a91af160403c4c824e4192837ced&js_code=' +
-						// 		code + '&grant_type=authorization_code',
-						// 	data: {
-						// 		code: code,
-						// 	},
-						// 	method: 'GET',
-						// 	header: {
-						// 		'content-type': 'application/json'
-						// 	},
-						// 	success: (res) => {
-						// 		uni.hideLoading();
-						// 	}
-						// })
+						})
 					}
 				});
 			},
 		},
-		onLoad() {
-			this.login();
-		}
+
 	}
 </script>
 
