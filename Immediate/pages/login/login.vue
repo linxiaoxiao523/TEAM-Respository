@@ -53,7 +53,7 @@
 							success: result => {
 								//响应成功
 								//这里就获取到了openid了
-
+								
 								that.OpenId = result.data.openid;
 								uni.setStorage({
 									key: 'user',
@@ -74,10 +74,13 @@
 										let sex = wxLoginres.userInfo.sex;
 										const db = uniCloud.database();
 										db.collection('user')
-											.where('openid == that.OpenId')
-											.get()
+											.where({
+												openid:that.OpenId
+											})
+											.get({getOne:true})
 											.then((res) => {
-												if (res.openid == null) {
+												console.log(res);
+												if (res.result.data.openid == null) {
 													// const db = uniCloud.database();
 													db.collection('user').add({
 														nickname: nickName,
@@ -86,6 +89,9 @@
 													})
 												};
 												// res 为数据库查询结果
+												const app = getApp();
+												app.globalData.user_openid=that.OpenId;
+												console.log(app.globalData.user_openid);
 											}).catch((err) => {
 												// err.message 错误信息
 												// err.code 错误码

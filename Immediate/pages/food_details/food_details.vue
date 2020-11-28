@@ -1,38 +1,44 @@
 <template>
-	<view class="container">
-		<!-- 最外层用container容器，设置背景颜色 -->
-		<view class="picture">
-			<image class="pic" v-bind:src="p_url"></image>
+	<view>
+		<view class="container">
+			<!-- 最外层用container容器，设置背景颜色 -->
+			<view class="picture">
+				<image class="pic" v-bind:src="p_url"></image>
+			</view>
+			<!-- picture和pic不一样，pic才是设置图片格式的，picture是放图片的“盒子” -->
+			<view class="paper">
+				<view>
+					<text class="title">{{name}}</text>
+				</view>
+				<!-- 文本内容用<view>和<text class=...>控制，view可以换行，text是行内元素 -->
+				<view>
+					<text class="subtitle">简介：</text>
+					<text>{{introduction}}</text>
+				</view>
+
+				<view>
+					<text class="subtitle">食品营养成分表：</text>
+				</view>
+
+				<view>
+					<t-table @change="change">
+						<t-tr>
+							<t-th>营养素</t-th>
+							<t-th>含量</t-th>
+
+						</t-tr>
+						<t-tr v-for="item in tableList1" :key="item.id">
+
+							<t-td>{{ item.nutrion }}</t-td>
+							<t-td>{{ item.content }}</t-td>
+						</t-tr>
+					</t-table>
+				</view>
+
+			</view>
 		</view>
-		<!-- picture和pic不一样，pic才是设置图片格式的，picture是放图片的“盒子” -->
-		<view class="paper">
-			<view>
-				<text class="title">{{name}}</text>
-			</view>
-			<!-- 文本内容用<view>和<text class=...>控制，view可以换行，text是行内元素 -->
-			<view>
-				<text class="subtitle">简介：</text>
-				<text>{{introduction}}</text>
-			</view>
-
-			<view>
-				<text class="subtitle">食品营养成分表：</text>
-			</view>
-
-			<view>
-				<t-table @change="change">
-					<t-tr>
-						<t-th>营养素</t-th>
-						<t-th>含量</t-th>
-
-					</t-tr>
-					<t-tr v-for="item in tableList1" :key="item.id">
-
-						<t-td>{{ item.nutrion }}</t-td>
-						<t-td>{{ item.content }}</t-td>
-					</t-tr>
-				</t-table>
-			</view>
+		<view class="footer">
+			<button type="primary" @click="button_submit">提交</button>
 		</view>
 	</view>
 </template>
@@ -51,10 +57,10 @@
 		},
 		data() {
 			return {
-				menuid: '',//对应_id
-				name: '菜名',
-				introduction: '菜品介绍',
-				p_url: "../../static/niunan.jpg",
+				menuid: '', //对应_id
+				name: '',
+				introduction: '',
+				p_url: "",
 				tableList1: [{
 						id: 0,
 						nutrion: '热量（大卡）',
@@ -85,22 +91,22 @@
 		},
 		onLoad(options) {
 			let that = this;
-			 that.menuid = options.menuid.replace(/""/g, "");
-			   that.menuid=JSON.parse(that.menuid)
-			   // console.log(this.textObj)
+			that.menuid = options.menuid.replace(/""/g, "");
+			that.menuid = JSON.parse(that.menuid)
+			// console.log(this.textObj)
 			console.log(options.menuid)
 			// that.menuid = options.menuid;
 			console.log(that.menuid);
 			const db = uniCloud.database()
 			db.collection('recipes')
 				.where({
-					_id:that.menuid
+					_id: that.menuid
 				})
 				.get({
-					getOne:true,
-					})
+					getOne: true,
+				})
 				.then(res => {
-						console.log(res),
+					console.log(res),
 						console.log(res.result.data.foodname),
 						that.name = res.result.data.foodname,
 						console.log(that.name),
@@ -117,6 +123,47 @@
 				})
 		},
 		methods: {
+			getTime: function() {
+
+				var date = new Date(),
+					year = date.getFullYear(),
+					month = date.getMonth() + 1,
+					day = date.getDate(),
+					hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours(),
+					minute = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes(),
+					second = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+				month >= 1 && month <= 9 ? (month = "0" + month) : "";
+				day >= 0 && day <= 9 ? (day = "0" + day) : "";
+				var timer = year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
+				return timer;
+			},
+			button_submit() {
+				let that = this;
+				const app = getApp();
+				const db = uniCloud.database();
+				// console.log(app.globalData.user_openid)
+				// console.log(that.menuid)
+				// console.log(that.name.toString())
+				console.log(db.env.now)
+				db.collection('food_today').add({
+						use_openid: app.globalData.user_openid,
+						recipes_id: that.menuid.toString(),
+						recipes_title: that.name.toString(),
+						recipes_calories: that.tableList1[0].content.toString(),
+						time: that.getTime()
+					}).then(res => {
+						uni.showToast({
+							title: "提交成功，请勿重复提交!"
+						})
+					})
+					.catch(err => {
+						console.log(err);
+						uni.showToast({
+							title: "提交失败!"
+						})
+
+					})
+			},
 			change(e) {
 				console.log(e.detail);
 			},
@@ -137,15 +184,15 @@
 		position: relative;
 		z-index: -1;
 		/* 背景米色在-1层，必须和position：relative一起用 */
-		height: 100%;
+		height: auto;
 	}
 
 	/* 所有的文本内容和表格内容,都是用一个paper的大盒子包起来的 */
 	.paper {
-		margin: -14% 4% 100% 4%;
+		margin: -14% 4% 0% 4%;
 		/* 外边框,让整个paper叠在图片上面(所以用-14%) */
 		background-color: white;
-		padding: 1% 2% 40% 2%;
+		padding: 1% 2% 5% 2%;
 		/* 内边距，保证不要顶着边框 */
 		border-radius: 30rpx;
 		/*边框圆角*/
@@ -183,6 +230,14 @@
 		font-weight: 600;
 		font-size: 30rpx;
 	}
+
+	/* 
+	.footer {
+		font-weight: 600;
+		font-size: 30rpx;
+		line-height: 100rpx;
+		flex: 0 0 100rpx;
+	} */
 
 	.pic {
 		width: 100%;

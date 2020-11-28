@@ -147,43 +147,9 @@
 						url: 'http://www.baidu.com'
 					}
 				],
-
-				// tabbar 属性
-				// current: 0,
 				show: true,
 				bgColor: '#ffffff',
 				borderTop: true,
-				// list: [{
-				// 		iconPath: "https://s3.ax1x.com/2020/11/20/DMMQC4.png",
-				// 		selectedIconPath: "https://s3.ax1x.com/2020/11/20/DMMl8J.png",
-				// 		text: '主页',
-				// 		isDot: true,
-				// 		customIcon: false,
-				// 		pagePath: "/pages/index/index" //主页页面地址
-				// 	},
-				// 	{
-				// 		iconPath: "https://s3.ax1x.com/2020/11/20/DMMJDx.png",
-				// 		selectedIconPath: "https://s3.ax1x.com/2020/11/20/DMMYb6.png",
-				// 		text: '锻炼',
-				// 		customIcon: false,
-				// 		pagePath: "/pages/clock/clock" //锻炼页面地址
-				// 	},
-				// 	{
-				// 		iconPath: "https://s3.ax1x.com/2020/11/20/DMMK5F.png",
-				// 		selectedIconPath: "https://s3.ax1x.com/2020/11/20/DMMGK1.png",
-				// 		text: '食谱',
-				// 		customIcon: false,
-				// 		pagePath: "/pages/food_menu/food_menu" //食谱页面地址
-				// 	},
-				// 	{
-				// 		iconPath: "https://s3.ax1x.com/2020/11/20/DMM3vR.png",
-				// 		selectedIconPath: "https://s3.ax1x.com/2020/11/20/DMM129.png",
-				// 		text: '成果',
-				// 		isDot: false,
-				// 		customIcon: false,
-				// 		pagePath: "/pages/result/result" //成果页面地址
-				// 	},
-				// ],
 				midButton: true,
 				inactiveColor: '#909399',
 				activeColor: '#5098FF',
