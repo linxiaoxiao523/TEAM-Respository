@@ -77,10 +77,10 @@
 											.where({
 												openid:that.OpenId
 											})
-											.get({getOne:true})
+											.get()
 											.then((res) => {
-												console.log(res);
-												if (res.result.data.openid == null) {
+												// console.log(res);
+												if (res.result.data.length <=0) {
 													// const db = uniCloud.database();
 													db.collection('user').add({
 														nickname: nickName,
@@ -89,6 +89,7 @@
 													})
 												};
 												// res 为数据库查询结果
+												console.log(res);
 												const app = getApp();
 												app.globalData.user_openid=that.OpenId;
 												console.log(app.globalData.user_openid);
