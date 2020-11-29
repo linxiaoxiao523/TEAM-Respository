@@ -38,7 +38,7 @@
 			</view>
 		</view>
 		<view class="footer">
-			<button type="primary" @click="button_submit">提交</button>
+			<button id="submit" type="primary" @click="button_submit">{{submit_text}}</button>
 		</view>
 	</view>
 </template>
@@ -61,6 +61,7 @@
 				name: '',
 				introduction: '',
 				p_url: "",
+				submit_text: "提交",
 				tableList1: [{
 						id: 0,
 						nutrion: '热量（大卡）',
@@ -97,6 +98,7 @@
 			console.log(options.menuid)
 			// that.menuid = options.menuid;
 			console.log(that.menuid);
+			// document.getElementById("submit").in
 			const db = uniCloud.database()
 			db.collection('recipes')
 				.where({
@@ -124,7 +126,6 @@
 		},
 		methods: {
 			getTime: function() {
-
 				var date = new Date(),
 					year = date.getFullYear(),
 					month = date.getMonth() + 1,
@@ -141,10 +142,7 @@
 				let that = this;
 				const app = getApp();
 				const db = uniCloud.database();
-				// console.log(app.globalData.user_openid)
-				// console.log(that.menuid)
-				// console.log(that.name.toString())
-				console.log(db.env.now)
+				var flag = 0;
 				db.collection('food_today').add({
 						use_openid: app.globalData.user_openid,
 						recipes_id: that.menuid.toString(),
@@ -153,16 +151,20 @@
 						time: that.getTime()
 					}).then(res => {
 						uni.showToast({
-							title: "提交成功，请勿重复提交!"
-						})
+							title: "提交成功!"
+						});
+						flag = 1;
 					})
 					.catch(err => {
 						console.log(err);
 						uni.showToast({
 							title: "提交失败!"
 						})
-
-					})
+					});
+				if (flag == 1) {
+					console.log("1");
+					document.getElementById("submit").setAttribute("disabled", true);
+				}
 			},
 			change(e) {
 				console.log(e.detail);
