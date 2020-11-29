@@ -1,15 +1,15 @@
 <template>
 	<view class="container">
 		<u-tabs :list="pageList" :is-scroll="false" :current="currentPage" @change="changePage"></u-tabs>
-		<u-collapse :accordion="false">
-			<u-collapse-item :title="food.kind" v-for="(food, index) in foodList" :key="index">
-				<view class="item" v-for="food in food.body">
+		<u-collapse ref="collapseList" :accordion="false">
+			<u-collapse-item :title="food.kind" v-for="food in foodList">
+				<view class="item" v-for="foodItem in food.body">
 					<view class="foodName">
-						{{food.name}}
-						({{food.calories}}千卡/100g)
+						{{foodItem.name}}
+						({{foodItem.calories}}千卡/100g)
 					</view>
 					<view class="inputNumber">
-						<u-number-box :value=0 :step=25 :max=500 :input-height="40" @change="amountChange($event, food)"></u-number-box>g
+						<u-number-box :value=0 :step=25 :max=500 :input-height="40" @change="amountChange($event, foodItem)"></u-number-box>g
 					</view>
 				</view>
 			</u-collapse-item>
@@ -41,82 +41,19 @@
 				currentPage: 1,
 				checked: [],
 				foodList: [{
-					kind: "谷物类",
-					body: [{
-							name: "稀饭",
-							calories: 59,
-							mass: 0,
-						},
-						{
-							name: "土豆",
-							calories: 81,
-							mass: 0,
-						},
-						{
-							name: "白薯",
-							calories: 106,
-							mass: 0,
-						},
-						{
-							name: "燕麦片",
-							calories: 338,
-							mass: 0,
-						},
-						{
-							name: "面条",
-							calories: 301,
-							mass: 0,
-						},
-						{
-							name: "面包",
-							calories: 313,
-							mass: 0,
-						},
-						{
-							name: "红薯",
-							calories: 86,
-							mass: 0,
-						},
-						{
-							name: "小米粥",
-							calories: 46,
-							mass: 0,
-						},
-						{
-							name: "油条",
-							calories: 388,
-							mass: 0,
-						},
-						{
-							name: "包子",
-							calories: 223,
-							mass: 0,
-						},
-						{
-							name: "馒头",
-							calories: 223,
-							mass: 0,
-						},
-						{
-							name: "米粉",
-							calories: 349,
-							mass: 0,
-						},
-					],
-				}, {
-					kind: "蛋类",
+					kind: "主食类",
 					body: [],
 				}, {
-					kind: "肉类",
+					kind: "蔬菜类",
 					body: [],
 				}, {
-					kind: "奶类及制品",
+					kind: "水果类",
 					body: [],
 				}, {
-					kind: "蔬果及菌藻",
+					kind: "肉、蛋类",
 					body: [],
 				}, {
-					kind: "坚果大豆类",
+					kind: "坚果类",
 					body: [],
 				}],
 				weight: 0,
@@ -161,11 +98,119 @@
 				activeColor: '#5098FF',
 			}
 		},
+		onLoad() {
+			const db = uniCloud.database();
+			db.collection('ingredients')
+				.where({
+					category: "主食类",
+				})
+				.get({
+					getCount: true,
+				})
+				.then(res => {
+					for (var i = 0; i < res.result.data.length; i++) {
+						this.foodList[0].body.push({
+							id: res.result.data[i]._id,
+							name: res.result.data[i].name,
+							calories: res.result.data[i].calories,
+							mass: 0,
+						})
+					}
+					this.$refs.collapseList.init();
+				})
+				.catch(err => {
+					console.log(err);
+				})
+			db.collection('ingredients')
+				.where({
+					category: "蔬菜类",
+				})
+				.get({
+					getCount: true,
+				})
+				.then(res => {
+					for (var i = 0; i < res.result.data.length; i++) {
+						this.foodList[1].body.push({
+							id: res.result.data[i]._id,
+							name: res.result.data[i].name,
+							calories: res.result.data[i].calories,
+							mass: 0,
+						})
+					}
+					this.$refs.collapseList.init();
+				})
+				.catch(err => {
+					console.log(err);
+				})
+			db.collection('ingredients')
+				.where({
+					category: "水果类",
+				})
+				.get({
+					getCount: true,
+				})
+				.then(res => {
+					for (var i = 0; i < res.result.data.length; i++) {
+						this.foodList[2].body.push({
+							id: res.result.data[i]._id,
+							name: res.result.data[i].name,
+							calories: res.result.data[i].calories,
+							mass: 0,
+						})
+					}
+					this.$refs.collapseList.init();
+				})
+				.catch(err => {
+					console.log(err);
+				})
+			db.collection('ingredients')
+				.where({
+					category: "肉、蛋类",
+				})
+				.get({
+					getCount: true,
+				})
+				.then(res => {
+					for (var i = 0; i < res.result.data.length; i++) {
+						this.foodList[3].body.push({
+							id: res.result.data[i]._id,
+							name: res.result.data[i].name,
+							calories: res.result.data[i].calories,
+							mass: 0,
+						})
+					}
+					this.$refs.collapseList.init();
+				})
+				.catch(err => {
+					console.log(err);
+				})
+			db.collection('ingredients')
+				.where({
+					category: "坚果类",
+				})
+				.get({
+					getCount: true,
+				})
+				.then(res => {
+					for (var i = 0; i < res.result.data.length; i++) {
+						this.foodList[4].body.push({
+							id: res.result.data[i]._id,
+							name: res.result.data[i].name,
+							calories: res.result.data[i].calories,
+							mass: 0,
+						})
+					}
+					this.$refs.collapseList.init();
+				})
+				.catch(err => {
+					console.log(err);
+				})
+		},
 		methods: {
-			amountChange(event, food) {
+			amountChange(event, foodItem) {
 				this.weight = 0;
 				this.calories = 0;
-				food.mass = event.value;
+				foodItem.mass = event.value;
 				for (var i in this.foodList) {
 					for (var j in this.foodList[i].body) {
 						this.weight += this.foodList[i].body[j].mass;
