@@ -38,7 +38,7 @@
 			</view>
 		</view>
 		<view class="footer">
-			<button id="submit" type="primary" @click="button_submit">{{submit_text}}</button>
+			<button id="submit" type="primary" :disabled="isDisabled" @click="button_submit" >{{submit_text}}</button>
 		</view>
 	</view>
 </template>
@@ -62,6 +62,7 @@
 				introduction: '',
 				p_url: "",
 				submit_text: "提交",
+				isDisabled: false,
 				tableList1: [{
 						id: 0,
 						nutrion: '热量（大卡）',
@@ -93,7 +94,9 @@
 		onLoad(options) {
 			let that = this;
 			that.menuid = options.menuid.replace(/""/g, "");
-			that.menuid = JSON.parse(that.menuid)
+			that.menuid = JSON.parse(that.menuid);
+			that.submit_text="提交";
+			that.isDisabled = false;
 			// console.log(this.textObj)
 			console.log(options.menuid)
 			// that.menuid = options.menuid;
@@ -142,7 +145,6 @@
 				let that = this;
 				const app = getApp();
 				const db = uniCloud.database();
-				var flag = 0;
 				db.collection('food_today').add({
 						use_openid: app.globalData.user_openid,
 						recipes_id: that.menuid.toString(),
@@ -153,7 +155,8 @@
 						uni.showToast({
 							title: "提交成功!"
 						});
-						flag = 1;
+						that.isDisabled=true;
+						that.submit_text="已提交";
 					})
 					.catch(err => {
 						console.log(err);
@@ -161,10 +164,6 @@
 							title: "提交失败!"
 						})
 					});
-				if (flag == 1) {
-					console.log("1");
-					document.getElementById("submit").setAttribute("disabled", true);
-				}
 			},
 			change(e) {
 				console.log(e.detail);

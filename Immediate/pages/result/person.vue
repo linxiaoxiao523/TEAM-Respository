@@ -21,7 +21,7 @@
 				<u-field v-model="target_weight" label="目标体重" placeholder="请填写目标体重">
 				</u-field>
 			</view>
-			<view class="center-list">
+<!-- 			<view class="center-list">
 				<view class="center-list-item border-bottom">
 					<text class="list-icon">&#xe60b;</text>
 					<text class="list-text">帮助与反馈</text>
@@ -39,8 +39,8 @@
 					<text class="list-text">关于应用</text>
 					<text class="navigat-arrow">&#xe65e;</text>
 				</view>
-			</view>
-			<u-button class="button" @click="submit">提交</u-button>
+			</view> -->
+			<u-button class="button" @click="submit">{{submit_text}}</u-button>
 		</view>
 		<view>
 			<u-tabbar v-model="current" :show="true" :bg-color="bgColor" :border-top="borderTop" :list="list" :inactive-color="inactiveColor"
@@ -54,13 +54,14 @@
 		data() {
 			return {
 				use_name: "你未登录",
+				submit_text: "提交",
 				login: false,
 				avatarUrl: "../../static/uni-center/logo.png",
 				uerInfo: {},
 				sex: "",
-				height: "",
-				weight: "",
-				target_weight: "",
+				height: 0.0,
+				weight: 0.0,
+				target_weight: 0.0,
 				currentr: 2,
 				listr: [{
 					name: '运动成果'
@@ -101,11 +102,27 @@
 						pagePath: "/pages/result/result" //成果页面地址
 					},
 				]
-
 			}
 		},
+		onLoad() {
+			const app = getApp();
+			const db = uniCloud.database();
+			db.collection('user').where({
+					openid: app.globalData.user_openid,
+				})
+				.get()
+				.then(res => {
+					console.log(res);
+					this.sex = res.result.data[0].sex;
+					this.weight = res.result.data[0].weight;
+					this.target_weight = res.result.data[0].wish_weight;
+					this.height = res.result.data[0].height;
+				})
+				.catch(err => {
+					console.log(err);
+				})
+		},
 		methods: {
-
 			getTime: function() {
 				var date = new Date(),
 					year = date.getFullYear(),
@@ -116,7 +133,7 @@
 					second = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
 				month >= 1 && month <= 9 ? (month = "0" + month) : "";
 				day >= 0 && day <= 9 ? (day = "0" + day) : "";
-				var timer = year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
+				var timer = year + '-' + month + '-' + day;
 				return timer;
 			},
 			changer(index) {
@@ -138,22 +155,65 @@
 			submit() {
 				const app = getApp();
 				const db = uniCloud.database();
+				this.height = parseFloat(this.height);
+				this.weight = parseFloat(this.weight);
+				this.target_weight = parseFloat(this.target_weight);
+				//数据库user 更新
 				db.collection("user")
 					.where({
-						opendi: app.globalData.user_openid
+						openid: app.globalData.user_openid
 					})
 					.update({
-						sex: this.sex,
+						sex: this.sex.toString(),
 						height: this.height,
 						weight: this.weight,
 						wish_weight: this.target_weight
+					}).catch(err => {
+						console.log(err);
+					});
+				var p = this.getTime();
+				db.collection('user_weight').where({
+						user_openid: app.globalData.user_openid,
+						time: p.toString(),
 					})
-				db.collection("user_weight")
-					.where({
-						opendi: app.globalData.user_openid
-					})
-					.update({
-
+					.get()
+					.then(res => {
+						if (res.result.data.length <= 0) {
+							console.log(app.globalData.user_openid);
+							db.collection("user_weight")
+								.add({
+									user_openid: app.globalData.user_openid,
+									time: p.toString(),
+									sex: this.sex.toString(),
+									weight: this.weight,
+									wish_weight: this.target_weight
+								}).catch(err => {
+									console.log(err);
+								})
+						} else {
+							db.collection('user_weight')
+								.where({
+									user_openid: app.globalData.user_openid,
+									time: p.toString()
+								})
+								.update({
+									weight: this.weight,
+									sex: this.sex.toString(),
+									weight: this.weight,
+									wish_weight: this.target_weight
+								})
+								.catch(err => {
+									console.log(err);
+								})
+						}
+						uni.showToast({
+							title: "提交成功!"
+						});
+					}).catch(err => {
+						console.log(err);
+						uni.showToast({
+							title: "提交失败~"
+						});
 					})
 			}
 		}
@@ -230,8 +290,11 @@
 	}
 
 	.button {
-		width: 50%;
-		margin-top: 20px
+		margin-top: 20px;
+		align-items: center;
+		justify-items: center;
+		display: flex;
+
 	}
 
 	.uer-name {
