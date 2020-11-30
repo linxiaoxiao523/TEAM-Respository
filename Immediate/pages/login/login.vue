@@ -139,9 +139,13 @@
 	}
 
 	.login {
-		border-radius: 80rpx;
-		margin: 60rpx 250rpx;
-		font-size: 30rpx;
+		background-color:white;
+		width: 35%;
+		opacity: 0.6;
+		color:black;
+		border-radius:30rpx;
+		margin:0 0 0 250rpx;
+		font-size: 35rpx;
 		margin-top: 500rpx;
 	}
 

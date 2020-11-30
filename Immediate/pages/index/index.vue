@@ -1,19 +1,13 @@
 <template>
+	<view class="container">
 	<view class="daren">
 		<view class="daren-banner-box">
 			<view class="talentsub-background"></view>
 			<view class="margin-tb-sm">
-				<swiper :indicator-dots="false" :autoplay="true" interval="5000" duration="200" class="daren-banner-swiper">
+				<swiper :indicator-dots="true" :autoplay="true" interval="6000" duration="1500" class="daren-banner-swiper">
 					<swiper-item v-for="(item, index) in banner" :key="index">
 						<image :src="item.picture" class="daren-slide-image" mode="widthFix" />
 						<view class="talentsub-text">{{ item.title }}</view>
-						<view class="talentsub-div">
-							<view class="talentsub-num">
-								<view class="number">555</view>
-								<view class="danpin">ready to make a nice work</view>
-							</view>
-							<image src="https://pic.rmb.bdstatic.com/0992e030fe3c2f2095797781f39d1c185482.gif" mode=""></image>
-						</view>
 					</swiper-item>
 				</swiper>
 			</view>
@@ -35,7 +29,7 @@
 						</view>
 					</view>
 					<view class="wandering-desc">
-						<view class="wandering-div-title"><text class="">涨知识，这些健身小常识知道了会对你有帮助，让你更具魅力</text></view>
+						<view class="wandering-div-title">涨知识，这些健身小常识知道了会对你有帮助，让你更具魅力</text></view>
 						<view class="wandering-div-subtitle">
 							<text class="">那么今天小编就要给大家说几个健身的小常识，这也许会对你的健身起到很大的帮助。</text>
 						</view>
@@ -45,6 +39,7 @@
 		</view>
 		<u-tabbar v-model="current" :show="true" :bg-color="bgColor" :border-top="borderTop" :list="list" :inactive-color="inactiveColor"
 		 :activeColor="activeColor"></u-tabbar>
+	</view>
 	</view>
 </template>
 
@@ -56,13 +51,13 @@
 			return {
 				bgColor: "#ffffff",
 				banner: [{
-						picture: "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3005384363,1609525191&fm=26&gp=0.jpg",
-						title: '自律是一种习惯~'
+						picture: "https://pcsdata.baidu.com/thumbnail/96fcbd52cj7aefbf6cf61dd743ca61c5?fid=3716426565-16051585-1118935599170299&rt=pr&sign=FDTAER-yUdy3dSFZ0SVxtzShv1zcMqd-BgH0fuxReRgjVlXtjqToY0KAwgo%3D&expires=2h&chkv=0&chkbd=0&chkpc=&dp-logid=3813560643&dp-callid=0&time=1606395600&size=c1600_u1600&quality=100&vuk=-&ft=video",
+						title: '打败朋友圈的英式早餐'
 					},
 
 					{
-						picture: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605728185428&di=1a0257b6dbd734fb330bd14a5d7205b8&imgtype=0&src=http%3A%2F%2Fbpic.588ku.com%2Felement_origin_min_pic%2F19%2F03%2F06%2Fe741501f47455ccd4dd0ece360d06450.jpg",
-						title: '夏日小确幸'
+						picture: "https://pcsdata.baidu.com/thumbnail/57534ad35m2e3503c9ddd744f33d9e8e?fid=3716426565-16051585-15977188662631&rt=pr&sign=FDTAER-yUdy3dSFZ0SVxtzShv1zcMqd-SqxEfNaEkPtQLGjRvSQd7VRqLF8%3D&expires=2h&chkv=0&chkbd=0&chkpc=&dp-logid=3939509035&dp-callid=0&time=1606399200&size=c1600_u1600&quality=100&vuk=-&ft=video",
+						title: '亲测！连续晨跑一个月后，谈谈我的真实感受'
 					},
 
 				],
@@ -120,19 +115,24 @@
 <!-- /按钮/ -->
 
 <style>
-	page {
+	.page {
 		background: #f2f2f2;
 	}
 
 	.daren {
 		width: 100%;
 		box-sizing: border-box;
+/* 		border:#000000;
+		border-size:300rpx; */
 	}
 
 	.daren-banner-box {
-		width: auto;
 		box-sizing: border-box;
-		height: auto;
+		border-color: #026dd1;
+		border-style: solid;
+		border-left: none;
+		border-right:none;
+		border-bottom-style:dotted;
 	}
 
 	.daren-banner-box .margin-tb-sm {
@@ -189,7 +189,7 @@
 	}
 
 	.talentsub-num {
-		color: #809def;
+		color: #7590da;
 		padding-top: 20upx;
 		padding-bottom: 10upx;
 	}
@@ -211,28 +211,20 @@
 		border-radius: 6px;
 	}
 
-	.talentsub-background {
-		position: absolute;
-		top: 0;
-		width: 100%;
-		height: 140px;
-		background-image: url('http://img.fqapps.com/FqkeWFSpNCpKEiM6Qgm_sabSD5Ag');
-	}
-
-	.week-title {
+/* 	.week-title {
 		font-size: 36upx;
 		padding-left: 38upx;
 		padding-top: 0upx;
 		padding-bottom: 10upx;
 		color: #484848;
-	}
+	} */
 
-	.week-new {
+/* 	.week-new {
 		width: 100%;
 		max-width: 100%;
 	}
-
-	.week-container {
+ */
+/* 	.week-container {
 		white-space: nowrap;
 		margin: 0 auto;
 		position: relative;
@@ -245,8 +237,8 @@
 		padding-right: 25upx;
 		border-radius: 12upx;
 	}
-
-	.week-container .swiper-wrapper {
+ */
+	/* .week-container .swiper-wrapper {
 		position: relative;
 		width: 100%;
 		height: 100%;
@@ -266,7 +258,7 @@
 		margin: 0 auto;
 		border-radius: 12upx;
 	}
-
+ *//* 
 	.week-container .swiper-wrapper .new-article {
 		display: inline-block;
 		background: #ffffff;
@@ -281,14 +273,13 @@
 		transform: translate3d(0, 0, 0);
 		margin-right: 20upx;
 	}
-
-	.week-container .swiper-wrapper .new-article .article-img {
-		width: 100%;
-		max-height: 300upx;
-		display: block;
-		border-top-left-radius: 12upx;
-		border-top-right-radius: 12upx;
-	}
+ *//* 
+  */
+/* 	.wandering{
+		border-color: #000000;
+		border-style: solid;
+		border-size:300rpx;
+	} */
 
 	.week-container .swiper-wrapper .new-article .article-title {
 		font-size: 30upx;
