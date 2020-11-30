@@ -73,8 +73,7 @@
 				productList: [],
 			};
 		},
-onLoad() { //获取数据库菜谱
-			
+		onLoad() { //获取数据库菜谱
 			const db = uniCloud.database();
 			console.log(1);
 			db.collection('recipes')
@@ -91,13 +90,10 @@ onLoad() { //获取数据库菜谱
 							"picture": res.result.data[i].picture
 						})
 					}
-				uni.startPullDownRefresh();
-				uni.stopPullDownRefresh()
 				})
 				.catch(err => {
 					console.log(err);
 				})
-			
 		},
 		methods: {
 			articlechang(id) {
