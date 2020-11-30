@@ -49,7 +49,7 @@
 					<u-button @click="show = false;show1 = true" type="primary" :plain="true">确定</u-button>
 				</u-col>
 				<u-col span="4">
-					<u-button @click="op1" type="primary" :plain="true">取消</u-button>
+					<u-button @click="show = false" type="primary" :plain="true">取消</u-button>
 				</u-col>
 			</u-row>
 			
@@ -201,15 +201,16 @@
 					this.end();
 				}
 			},
+
 			get_time(){
 				// 运动时间传给后端
 					
 				// 初始化
 				this.end();
-				this.state = "开始计时";
-				this.count = 0;
-				this.flag = 1;
-				this.flag1 = 0;
+				this.state = "继续计时";
+				// this.count = 0;
+				// this.flag = 1;
+				// this.flag1 = 0;
 				this.show = true;
 				// console.log(this.count);
 			},
