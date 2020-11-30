@@ -115,7 +115,19 @@
 		},
 		methods: {
 			changer(index) {
-				this.currentr = index;
+				if (index == 0) {
+					uni.switchTab({
+						url: "/pages/result/result"
+					});
+				} else if (index == 1) {
+					uni.navigateTo({
+						url: "/pages/result/person"
+					});
+				} else if (index == 2) {
+					uni.navigateTo({
+						url: "/pages/result/person"
+					});
+				}
 			},
 			getServerData(){
 				// uni.request({
