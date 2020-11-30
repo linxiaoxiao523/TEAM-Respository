@@ -5,7 +5,7 @@
 
 		<view class="center">
 			<view class="logo">
-				<image class="logo-img" :src="user_to"></image>
+				<image class="logo-img" :src="use_to"></image>
 				<view class="logo-title">
 					<text class="uer-name">Hi！{{use_name}}</text>
 					<!-- 					<text class="go-login navigat-arrow" v-if="!login">&#xe65e;</text> -->
@@ -54,6 +54,7 @@
 		data() {
 			return {
 				use_name: "你未登录",
+				use_to:"",
 				submit_text: "提交",
 				login: false,
 				avatarUrl: "../../static/uni-center/logo.png",
@@ -113,6 +114,8 @@
 				.get()
 				.then(res => {
 					console.log(res);
+					this.use_to=res.result.data[0].head_url;
+					this.use_name=res.result.data[0].nickname;
 					this.sex = res.result.data[0].sex;
 					this.weight = res.result.data[0].weight;
 					this.target_weight = res.result.data[0].wish_weight;
@@ -137,7 +140,6 @@
 				return timer;
 			},
 			changer(index) {
-				console.log(index);
 				if (index == 0) {
 					uni.switchTab({
 						url: "/pages/result/result"
@@ -179,7 +181,6 @@
 					.get()
 					.then(res => {
 						if (res.result.data.length <= 0) {
-							console.log(app.globalData.user_openid);
 							db.collection("user_weight")
 								.add({
 									user_openid: app.globalData.user_openid,

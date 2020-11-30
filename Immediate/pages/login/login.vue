@@ -65,7 +65,8 @@
 										let nickName = wxLoginres.userInfo.nickName;
 										// let openid = wxLoginres.userInfo.openid
 										let avatarUrl = wxLoginres.userInfo.avatarUrl;
-										let sex = wxLoginres.userInfo.sex;
+										// let sex = wxLoginres.userInfo.gender;
+										// console.log(sex);
 										const db = uniCloud.database();
 										db.collection('user')
 											.where({
@@ -79,9 +80,20 @@
 													db.collection('user').add({
 														nickname: nickName,
 														openid: that.OpenId,
-														sex: sex
+														// sex: sex,
+														head_url:avatarUrl
 													})
-												};
+												}
+												else{
+													db.collection('user').where({
+														openid:that.OpenId
+													}).update({
+														nickname: nickName,
+														openid: that.OpenId,
+														// sex: sex,
+														head_url:avatarUrl
+													})
+												}
 												// res 为数据库查询结果
 												console.log(res);
 												const app = getApp();
