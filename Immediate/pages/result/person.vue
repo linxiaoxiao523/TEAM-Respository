@@ -21,25 +21,6 @@
 				<u-field v-model="target_weight" label="目标体重" placeholder="请填写目标体重">
 				</u-field>
 			</view>
-<!-- 			<view class="center-list">
-				<view class="center-list-item border-bottom">
-					<text class="list-icon">&#xe60b;</text>
-					<text class="list-text">帮助与反馈</text>
-					<text class="navigat-arrow">&#xe65e;</text>
-				</view>
-				<view class="center-list-item">
-					<text class="list-icon">&#xe65f;</text>
-					<text class="list-text">服务条款及隐私</text>
-					<text class="navigat-arrow">&#xe65e;</text>
-				</view>
-			</view>
-			<view class="center-list">
-				<view class="center-list-item">
-					<text class="list-icon">&#xe614;</text>
-					<text class="list-text">关于应用</text>
-					<text class="navigat-arrow">&#xe65e;</text>
-				</view>
-			</view> -->
 			<u-button class="button" @click="submit">{{submit_text}}</u-button>
 		</view>
 		<view>
