@@ -6,91 +6,38 @@
 				<u-tabs :list="pageList" :is-scroll="false" :current="currentPage" @change="changePage"></u-tabs>
 				<rich-text :nodes="nodes"></rich-text>
 			</view>
+
 		</view>
 
 		<view class="food">
-			<view class="sonfood" style="background:#55aaff">
-				<uni-card class="card" isShadow="true" scroll-y="true">
-					<form @submit="formSubmit" @reset="formReset">
-						<view class="uni-form-item uni-column">
-							<input class="uni-input" name="input" @v-model="fname" @input="input" placeholder="输入早餐" style="background:#d3dad9;" />
-							<view class="space" style="height: 10px;"></view>
-						</view>
-						<view class="uni-btn-v">
-							<button form-type="submit" type="primary" size="mini" @click="get">Submit</button>
-							<!-- <button type="primary" form-type="reset" size="mini">Reset</button> -->
-						</view>
-					</form>
-					<!-- <view class="space" style="height: 10px;"></view> -->
-					<view class="number">
-						<uni-list class="list">
-							<uni-list-item title="能量" rightText="135.17kcal"></uni-list-item>
-							<uni-list-item title="脂肪" rightText="6.21g"></uni-list-item>
-							<uni-list-item title="碳水化合物" rightText="12.96g"></uni-list-item>
-							<uni-list-item title="蛋白质" rightText="7.42g"></uni-list-item>
-						</uni-list>
-
-					</view>
-				</uni-card>
+			<view>
+				<picker :range="years" @change="yearChange" mode="multiSelector" class="time">
+					{{ years[0][yearsIndex1] }} 月 {{ years[1][yearsIndex2]  }}日
+				</picker>
 			</view>
-
-			<view class="sonfood" style="background:#aaffff">
-				<uni-card class="card" isShadow="true" scroll-y="true">
-					<form @submit="formSubmit" @reset="formReset">
-						<view class="uni-form-item uni-column">
-							<input class="uni-input" name="input" @v-model="fname" @input="input" placeholder="输入午餐" style="background:#d3dad9;" />
-							<view class="space" style="height: 10px;"></view>
-						</view>
-						<view class="uni-btn-v">
-							<button form-type="submit" type="primary" size="mini" @click="get">Submit</button>
-							<!-- <button type="primary" form-type="reset" size="mini">Reset</button> -->
-						</view>
-					</form>
-					<!-- <view class="space" style="height: 10px;"></view> -->
-					<view class="number">
-						<uni-list class="list" >
-							<uni-list-item title="能量" showArrow="false"></uni-list-item>
-							<uni-list-item title="脂肪"  showArrow="false"></uni-list-item>
-							<uni-list-item title="碳水化合物" showArrow="false"></uni-list-item>
-							<uni-list-item title="蛋白质" showArrow="false"></uni-list-item>
-						</uni-list>
-
-					</view>
-				</uni-card>
-
-			</view>
-
-			<view class="sonfood" style="background:#aaaaff">
-				<uni-card class="card" isShadow="true" scroll-y="true">
-					<form @submit="formSubmit" @reset="formReset">
-						<view class="uni-form-item uni-column">
-							<input class="uni-input" name="input" @v-model="fname" @input="input" placeholder="输入晚餐" style="background:#d3dad9;" />
-							<view class="space" style="height: 10px;"></view>
-						</view>
-						<view class="uni-btn-v">
-							<button form-type="submit" type="primary" size="mini" @click="get">Submit</button>
-							<!-- <button type="primary" form-type="reset" size="mini">Reset</button> -->
-						</view>
-					</form>
-					<!-- <view class="space" style="height: 10px;"></view> -->
-					<view class="number">
-						<uni-list class="list">
-							<uni-list-item title="能量"></uni-list-item>
-							<uni-list-item title="脂肪"></uni-list-item>
-							<uni-list-item title="碳水化合物"></uni-list-item>
-							<uni-list-item title="蛋白质"></uni-list-item>
-						</uni-list>
-
-					</view>
-				</uni-card>
+			<!-- 						 <u-button class="date">选择日期</u-button>	 -->
+		</view>
+		<view>
+			<uni-list class="row">
+				<uni-list-item title="早餐"></uni-list-item>
+				<uni-list-item title="午餐"></uni-list-item>
+				<uni-list-item title="晚餐"></uni-list-item>
+				<uni-list-item title="加餐"></uni-list-item>
+				<uni-list-item title="运动"></uni-list-item>
+			</uni-list>
+			<view>
 
 			</view>
 		</view>
-		<div>
+
+		<view>
 			<u-tabbar v-model="current" :show="true" :bg-color="bgColor" :border-top="borderTop" :list="list" :inactive-color="inactiveColor"
 			 :activeColor="activeColor"></u-tabbar>
-		</div>
+		</view>
+
 	</view>
+
+
 </template>
 
 <script>
@@ -98,7 +45,12 @@
 
 		data() {
 			return {
-				bgColor: "#ffffff",
+				years: [
+					["请选择月份", 10, 11, 12],
+					["请选择日期", 1, 2, 3]
+				],
+				yearsIndex1: 0,
+				yearsIndex2: 0,
 				pageList: [{
 					name: '食谱推荐'
 				}, {
@@ -155,9 +107,17 @@
 						pagePath: "/pages/result/result" //成果页面地址
 					},
 				],
+
 			}
 		},
 		methods: {
+			yearChange: function(e) {
+				console.log(e)
+				//获得对象的 detail的 value
+				//通过数组的下标改变显示在页面的值
+				this.yearsIndex1 = e.detail.value[0];
+				this.yearsIndex2 = e.detail.value[1];
+			},
 			formSubmit: function(e) {
 				console.log('form发生了submit事件，携带数据为：' + JSON.stringify(e.detail.value))
 				var formdata = e.detail.value
@@ -223,6 +183,7 @@
 		align-items: center;
 		flex-grow: 1;
 		flex-wrap: wrap;
+
 	}
 
 	.food_today {
@@ -233,45 +194,62 @@
 
 	}
 
-	.food {
-		display: flex;
-		flex-direction: column;
-		flex-grow:3;
-		align-items:center;
-		text-align: center;
+	.time {
+		posion: absolute;
+		margin: 9rpx 0 0 50rpx;
+		height: 50rpx;
+		font-size: 4rpx;
 
 	}
-	.sonfood{
+
+	.date {
+		position: absolute;
+		margin: 0 0 0 190rpx;
+		height: 50rpx;
+		font-size: 4rpx;
+		font-weight: bold;
+	}
+
+	.food {
+
 		display: flex;
 		flex-direction: row;
-		width:100%;
-		
-		align-items:center;
+		width: 100%;
+		justify-content: flex-start;
+		align-items: flex-start;
 		text-align: center;
 	}
-	
+
 	.card {
 		display: flex;
 		flex-direction: column;
-		width:100%;
-		align-items:center;
+		width: 100%;
+		align-items: center;
 		text-align: center;
-		
+
 	}
 
-	.number{
+	.number {
 		display: flex;
 		flex-direction: row;
 		align-items: center;
-		
+
 	}
-	
-	.list{
+
+	.list {
 		display: flex;
 		flex-direction: row;
-		align-items: center; 
+		align-items: center;
 		text-align: left;
-	
-		}
-	
+
+	}
+
+	.row {
+		display: absolute;
+		margin: 0 0 0 30rpx;
+		height: 50rpx;
+		font-size: 10rpx;
+		font-weight: bold;
+
+	}
 </style>
