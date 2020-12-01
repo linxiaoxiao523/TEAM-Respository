@@ -1,15 +1,19 @@
 <template>
-	<div>
+	<div >
 		<!-- 吸顶 搜索框 -->
+		
 		<u-sticky>
-			<view>
+				<view class="topback">
 				<u-row>
 					<u-search v-model="keyword" @change="change" @custom="custom" @search="search" :shape="shape" :clearabled="clearabled"
 					 :show-action="showAction" :input-align="inputAlign" @clear="clear"></u-search>
 				</u-row>
+				<view class="topdot"> .</view>
 			</view>
 		</u-sticky>
-
+		
+		
+		
 		<view>
 			<scroll-view scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-Y" @scrolltoupper="upper"
 			 @scrolltolower="lower" @scroll="scroll">
@@ -20,7 +24,7 @@
 					 @click='goto(article.url)' :show-foot="false">
 						<view class="" slot="body">
 							<u-row class="row1">
-								<u-col class='col' span="9" align="left">
+								<u-col class='col' span="9" align="left" >
 									<u-icon name="clock-fill" size="34" color="" :label='article.time'></u-icon>
 								</u-col>
 
@@ -34,8 +38,8 @@
 				<u-back-top :scroll-top="scrollTop"></u-back-top>
 			</scroll-view>
 		</view>
-		<u-tabbar v-model="current" show="true" :bg-color="bgColor" :border-top="borderTop" :list="list" :inactive-color="inactiveColor"
-		 :activeColor="activeColor"></u-tabbar>
+		<!-- <u-tabbar v-model="current" show="true" :bg-color="bgColor" :border-top="borderTop" :list="list" :inactive-color="inactiveColor"
+		 :activeColor="activeColor"></u-tabbar> -->
 	</div>
 </template>
 
@@ -147,9 +151,43 @@
 						url: 'http://www.baidu.com'
 					}
 				],
+
+				// tabbar 属性
+				// current: 0,
 				show: true,
 				bgColor: '#ffffff',
 				borderTop: true,
+				// list: [{
+				// 		iconPath: "https://s3.ax1x.com/2020/11/20/DMMQC4.png",
+				// 		selectedIconPath: "https://s3.ax1x.com/2020/11/20/DMMl8J.png",
+				// 		text: '主页',
+				// 		isDot: true,
+				// 		customIcon: false,
+				// 		pagePath: "/pages/index/index" //主页页面地址
+				// 	},
+				// 	{
+				// 		iconPath: "https://s3.ax1x.com/2020/11/20/DMMJDx.png",
+				// 		selectedIconPath: "https://s3.ax1x.com/2020/11/20/DMMYb6.png",
+				// 		text: '锻炼',
+				// 		customIcon: false,
+				// 		pagePath: "/pages/clock/clock" //锻炼页面地址
+				// 	},
+				// 	{
+				// 		iconPath: "https://s3.ax1x.com/2020/11/20/DMMK5F.png",
+				// 		selectedIconPath: "https://s3.ax1x.com/2020/11/20/DMMGK1.png",
+				// 		text: '食谱',
+				// 		customIcon: false,
+				// 		pagePath: "/pages/food_menu/food_menu" //食谱页面地址
+				// 	},
+				// 	{
+				// 		iconPath: "https://s3.ax1x.com/2020/11/20/DMM3vR.png",
+				// 		selectedIconPath: "https://s3.ax1x.com/2020/11/20/DMM129.png",
+				// 		text: '成果',
+				// 		isDot: false,
+				// 		customIcon: false,
+				// 		pagePath: "/pages/result/result" //成果页面地址
+				// 	},
+				// ],
 				midButton: true,
 				inactiveColor: '#909399',
 				activeColor: '#5098FF',
@@ -190,6 +228,7 @@
 	.container {
 		height: 200vh;
 		margin-top: 150rpx;
+		// background-color: #FFFFFF;
 	}
 
 	.sticky {
@@ -198,5 +237,17 @@
 		background-color: #2979ff;
 		color: #fff;
 		padding: 24rpx;
+	}
+	#Article{
+		background-color: rgba($color:#2979ff, $alpha: 0.5);
+		height: 120%;
+	}
+	.topback{
+		background-color: white;
+		
+	}
+	.topdot{
+		background-color: white;
+		color: white;
 	}
 </style>
