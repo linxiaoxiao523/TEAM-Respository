@@ -13,7 +13,7 @@
 
 			<u-col>
 				<p class="column2" style="float: left;">当前消耗: {{calorie1.toFixed(2)}} kcal</p>
-				<u-icon name="star-fill" class="column4" style="float: left;"></u-icon>
+<!-- 				<u-icon name="star-fill" class="column4" style="float: left;"></u-icon> -->
 			</u-col>
 		</u-row>
 

@@ -10,10 +10,6 @@
 			</uni-list>
 
 		</view>
-
-
-		<!-- <view class="loading">{{loadingText}}</view> -->
-
 		<div>
 			<u-tabbar v-model="current" :show="true" :bg-color="bgColor" :border-top="borderTop" :list="list" :inactive-color="inactiveColor"
 			 :activeColor="activeColor"></u-tabbar>
@@ -23,10 +19,7 @@
 </template>
 
 <script>
-	// import uniList from "@/components/uni-list/uni-list.vue"
-	//    import uniListItem from "@/components/uni-list-item/uni-list-item.vue"
 	export default {
-		// components: {uniList,uniListItem},
 		data() {
 			return {
 				bgColor: "#ffffff",

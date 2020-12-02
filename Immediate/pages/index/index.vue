@@ -22,7 +22,7 @@
 
 				<view class="wandering-content">
 					<view class="wandering-div" v-for="(item,index) in articles" :key="index">
-						<uni-card :title="item.title" mode="style" is-shadow="true" :thumbnail="item.picture" >
+						<uni-card @click="change(item.id)" :title="item.title" mode="style" is-shadow="true" :thumbnail="item.picture" >
 						</uni-card>
 					</view>
 				</view>
