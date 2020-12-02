@@ -1,30 +1,30 @@
 <template>
-	<div >
+	<div>
 		<!-- 吸顶 搜索框 -->
-		
+
 		<u-sticky>
-				<view class="topback">
+			<view class="topback">
 				<u-row>
 					<u-search v-model="keyword" @change="change" @custom="custom" @search="search" :shape="shape" :clearabled="clearabled"
 					 :show-action="showAction" :input-align="inputAlign" @clear="clear"></u-search>
 				</u-row>
-	<!-- 			<view class="topdot"> .</view> -->
+				<!-- 			<view class="topdot"> .</view> -->
 			</view>
 		</u-sticky>
-		
-		
-		
+
+
+
 		<view>
 			<scroll-view scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-Y" @scrolltoupper="upper"
 			 @scrolltolower="lower" @scroll="scroll">
 				<view id='Article'>
 					<!-- v-for 循环从数据库中传回的 articleLiet  并生成 card -->
 					<!-- 注册点击事件，跳转到相应的推文界面 -->
-					<u-card v-for="article in articleList" :key="index1" :title="article.title" :sub-title="article.time" :thumb="article.cover"
-					 @click='goto(article.url)' :show-foot="false">
+					<u-card v-for="article in articleList" :key="index1" :title="article.title" :thumb="article.cover"
+					 @click='goto(article.id)' :show-foot="false">
 						<view class="" slot="body">
 							<u-row class="row1">
-								<u-col class='col' span="9" align="left" >
+								<u-col class='col' span="9" align="left">
 									<u-icon name="clock-fill" size="34" color="" :label='article.time'></u-icon>
 								</u-col>
 
@@ -62,95 +62,7 @@
 				thumb: 'http://pic2.sc.chinaz.com/Files/pic/pic9/202002/hpic2119_s.jpg',
 
 				//card 数据库传回的推文信息
-				articleList: [{
-						cover: 'https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1605788336&di=d7391ee28fe49a24cc8114c5fe776a31&src=http://img.mp.itc.cn/upload/20170205/377e86f8b5dd49c2bab67531169bb8bc_th.jpeg',
-						title: '健康减肥食谱',
-						time: '2020-02-02',
-						count: '999',
-						content: '',
-						url: 'http://www.baidu.com'
-					},
-					{
-						// 	cover: require('@/assets/images/article-cover-2.jpg'),
-
-						cover: 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3194055763,3664834051&fm=26&gp=0.jpg',
-						title: '6个超强燃脂技巧',
-						time: '2020-02-01',
-						count: '999',
-						content: '今天是2月1日，疫情仍在延续。在大部分人还在家里“避险”的时候，医生、警察们早已坚守在自己的工作岗位，用自己的血肉之躯铸就抗击疫情的钢铁长城。钢轨上，火车呼啸，铁路人们也早早地来到单位，他们为运输物资的重要“生命线”保驾护航。新型冠状肺炎疫情打响后，车站封闭、乡镇互关，交通不便，留守值班干部职工的日常生活、防控药品极缺。',
-						url: 'http://www.baidu.com'
-					},
-					{
-						// 	cover: require('@/assets/images/article-cover-2.jpg'),
-
-						cover: 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3194055763,3664834051&fm=26&gp=0.jpg',
-						title: '6个超强燃脂技巧',
-						time: '2020-02-01',
-						count: '999',
-						content: '今天是2月1日，疫情仍在延续。在大部分人还在家里“避险”的时候，医生、警察们早已坚守在自己的工作岗位，用自己的血肉之躯铸就抗击疫情的钢铁长城。钢轨上，火车呼啸，铁路人们也早早地来到单位，他们为运输物资的重要“生命线”保驾护航。新型冠状肺炎疫情打响后，车站封闭、乡镇互关，交通不便，留守值班干部职工的日常生活、防控药品极缺。',
-						url: 'http://www.baidu.com'
-					},
-					{
-						// 	cover: require('@/assets/images/article-cover-2.jpg'),
-
-						cover: 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3194055763,3664834051&fm=26&gp=0.jpg',
-						title: '6个超强燃脂技巧',
-						time: '2020-02-01',
-						count: '999',
-						content: '今天是2月1日，疫情仍在延续。在大部分人还在家里“避险”的时候，医生、警察们早已坚守在自己的工作岗位，用自己的血肉之躯铸就抗击疫情的钢铁长城。钢轨上，火车呼啸，铁路人们也早早地来到单位，他们为运输物资的重要“生命线”保驾护航。新型冠状肺炎疫情打响后，车站封闭、乡镇互关，交通不便，留守值班干部职工的日常生活、防控药品极缺。',
-						url: 'http://www.baidu.com'
-					},
-					{
-						// 	cover: require('@/assets/images/article-cover-2.jpg'),
-
-						cover: 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3194055763,3664834051&fm=26&gp=0.jpg',
-						title: '6个超强燃脂技巧',
-						time: '2020-02-01',
-						count: '999',
-						content: '今天是2月1日，疫情仍在延续。在大部分人还在家里“避险”的时候，医生、警察们早已坚守在自己的工作岗位，用自己的血肉之躯铸就抗击疫情的钢铁长城。钢轨上，火车呼啸，铁路人们也早早地来到单位，他们为运输物资的重要“生命线”保驾护航。新型冠状肺炎疫情打响后，车站封闭、乡镇互关，交通不便，留守值班干部职工的日常生活、防控药品极缺。',
-						url: 'http://www.baidu.com'
-					},
-					{
-						// 	cover: require('@/assets/images/article-cover-2.jpg'),
-
-						cover: 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3194055763,3664834051&fm=26&gp=0.jpg',
-						title: '6个超强燃脂技巧',
-						time: '2020-02-01',
-						count: '999',
-						content: '今天是2月1日，疫情仍在延续。在大部分人还在家里“避险”的时候，医生、警察们早已坚守在自己的工作岗位，用自己的血肉之躯铸就抗击疫情的钢铁长城。钢轨上，火车呼啸，铁路人们也早早地来到单位，他们为运输物资的重要“生命线”保驾护航。新型冠状肺炎疫情打响后，车站封闭、乡镇互关，交通不便，留守值班干部职工的日常生活、防控药品极缺。',
-						url: 'http://www.baidu.com'
-					},
-					{
-						// 	cover: require('@/assets/images/article-cover-2.jpg'),
-
-						cover: 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3194055763,3664834051&fm=26&gp=0.jpg',
-						title: '6个超强燃脂技巧',
-						time: '2020-02-01',
-						count: '999',
-						content: '今天是2月1日，疫情仍在延续。在大部分人还在家里“避险”的时候，医生、警察们早已坚守在自己的工作岗位，用自己的血肉之躯铸就抗击疫情的钢铁长城。钢轨上，火车呼啸，铁路人们也早早地来到单位，他们为运输物资的重要“生命线”保驾护航。新型冠状肺炎疫情打响后，车站封闭、乡镇互关，交通不便，留守值班干部职工的日常生活、防控药品极缺。',
-						url: 'http://www.baidu.com'
-					},
-					{
-						// 	cover: require('@/assets/images/article-cover-2.jpg'),
-
-						cover: 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3194055763,3664834051&fm=26&gp=0.jpg',
-						title: '6个超强燃脂技巧',
-						time: '2020-02-01',
-						count: '999',
-						content: '今天是2月1日，疫情仍在延续。在大部分人还在家里“避险”的时候，医生、警察们早已坚守在自己的工作岗位，用自己的血肉之躯铸就抗击疫情的钢铁长城。钢轨上，火车呼啸，铁路人们也早早地来到单位，他们为运输物资的重要“生命线”保驾护航。新型冠状肺炎疫情打响后，车站封闭、乡镇互关，交通不便，留守值班干部职工的日常生活、防控药品极缺。',
-						url: 'http://www.baidu.com'
-					},
-					{
-						// 	cover: require('@/assets/images/article-cover-2.jpg'),
-
-						cover: 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3194055763,3664834051&fm=26&gp=0.jpg',
-						title: '6个超强燃脂技巧',
-						time: '2020-02-01',
-						count: '999',
-						content: '今天是2月1日，疫情仍在延续。在大部分人还在家里“避险”的时候，医生、警察们早已坚守在自己的工作岗位，用自己的血肉之躯铸就抗击疫情的钢铁长城。钢轨上，火车呼啸，铁路人们也早早地来到单位，他们为运输物资的重要“生命线”保驾护航。新型冠状肺炎疫情打响后，车站封闭、乡镇互关，交通不便，留守值班干部职工的日常生活、防控药品极缺。',
-						url: 'http://www.baidu.com'
-					}
-				],
+				articleList: [],
 
 				// tabbar 属性
 				// current: 0,
@@ -193,12 +105,31 @@
 				activeColor: '#5098FF',
 			}
 		},
+		onLoad() {
+			const db = uniCloud.database()
+			db.collection('article').get({
+				getCount: true,
+			}).then(res => {
+				console.log(res);
+				for (var i = 0; i < res.result.count; i++) {
+					this.articleList.push({
+						"id": res.result.data[i]._id,
+						"title": res.result.data[i].title,
+						"cover": res.result.data[i].picture,
+						"count": res.result.data[i].tapnum,
+					});
+				}
+			})
+		},
 		onPageScroll(e) {
 			this.scrollTop = e.scrollTop;
 		},
 		methods: {
-			goto(url) {
-				console.log(url)
+			goto(id) {
+				var articleid = JSON.stringify(id)
+				uni.navigateTo({
+					url: "/pages/article_details/article_details?articleid=" + articleid
+				})
 			},
 			custom(keyword) { //调用数据库筛选搜索框内容
 				console.log(keyword)
@@ -239,17 +170,18 @@
 		color: #fff;
 		padding: 24rpx;
 	}
-	#Article{
-		postion:absolute;
+
+	#Article {
+		postion: absolute;
 		background-color: rgba($color:#2979ff, $alpha: 0.5);
 		height: 100%;
-		padding-top:2%;
-		
-	}
-	.topback{
-		positon:absolute;
-		background-color: white;
-		margin-bottom:2%;
+		padding-top: 2%;
+
 	}
 
+	.topback {
+		positon: absolute;
+		background-color: white;
+		margin-bottom: 2%;
+	}
 </style>
