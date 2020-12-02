@@ -8,7 +8,7 @@
 					<u-search v-model="keyword" @change="change" @custom="custom" @search="search" :shape="shape" :clearabled="clearabled"
 					 :show-action="showAction" :input-align="inputAlign" @clear="clear"></u-search>
 				</u-row>
-				<view class="topdot"> .</view>
+	<!-- 			<view class="topdot"> .</view> -->
 			</view>
 		</u-sticky>
 		
@@ -225,11 +225,12 @@
 </style>
 
 <style lang="scss" scoped>
-	.container {
-		height: 200vh;
-		margin-top: 150rpx;
-		// background-color: #FFFFFF;
-	}
+	// .container {
+	// 	position:absolute;
+	// 	// height: 200vh;
+	// 	// margin-top: 150rpx;
+	// 	// background-color: #FFFFFF;
+	// }
 
 	.sticky {
 		width: 750rpx;
@@ -239,15 +240,16 @@
 		padding: 24rpx;
 	}
 	#Article{
+		postion:absolute;
 		background-color: rgba($color:#2979ff, $alpha: 0.5);
-		height: 120%;
-	}
-	.topback{
-		background-color: white;
+		height: 100%;
+		padding-top:2%;
 		
 	}
-	.topdot{
+	.topback{
+		positon:absolute;
 		background-color: white;
-		color: white;
+		margin-bottom:2%;
 	}
+
 </style>
