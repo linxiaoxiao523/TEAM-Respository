@@ -20,8 +20,8 @@
 				<view id='Article'>
 					<!-- v-for 循环从数据库中传回的 articleLiet  并生成 card -->
 					<!-- 注册点击事件，跳转到相应的推文界面 -->
-					<u-card v-for="article in articleList" :key="index1" :title="article.title" :thumb="article.cover"
-					 @click='goto(article.id)' :show-foot="false">
+					<u-card v-for="(article,index) in articleList" :key="index" :title="article.title" :thumb="article.cover" @click='goto(article.id)'
+					 :show-foot="false">
 						<view class="" slot="body">
 							<u-row class="row1">
 								<u-col class='col' span="9" align="left">
@@ -60,46 +60,11 @@
 				showAction: true,
 				inputAlign: 'left',
 				thumb: 'http://pic2.sc.chinaz.com/Files/pic/pic9/202002/hpic2119_s.jpg',
-
 				//card 数据库传回的推文信息
 				articleList: [],
-
-				// tabbar 属性
-				// current: 0,
 				show: true,
 				bgColor: '#ffffff',
 				borderTop: true,
-				// list: [{
-				// 		iconPath: "https://s3.ax1x.com/2020/11/20/DMMQC4.png",
-				// 		selectedIconPath: "https://s3.ax1x.com/2020/11/20/DMMl8J.png",
-				// 		text: '主页',
-				// 		isDot: true,
-				// 		customIcon: false,
-				// 		pagePath: "/pages/index/index" //主页页面地址
-				// 	},
-				// 	{
-				// 		iconPath: "https://s3.ax1x.com/2020/11/20/DMMJDx.png",
-				// 		selectedIconPath: "https://s3.ax1x.com/2020/11/20/DMMYb6.png",
-				// 		text: '锻炼',
-				// 		customIcon: false,
-				// 		pagePath: "/pages/clock/clock" //锻炼页面地址
-				// 	},
-				// 	{
-				// 		iconPath: "https://s3.ax1x.com/2020/11/20/DMMK5F.png",
-				// 		selectedIconPath: "https://s3.ax1x.com/2020/11/20/DMMGK1.png",
-				// 		text: '食谱',
-				// 		customIcon: false,
-				// 		pagePath: "/pages/food_menu/food_menu" //食谱页面地址
-				// 	},
-				// 	{
-				// 		iconPath: "https://s3.ax1x.com/2020/11/20/DMM3vR.png",
-				// 		selectedIconPath: "https://s3.ax1x.com/2020/11/20/DMM129.png",
-				// 		text: '成果',
-				// 		isDot: false,
-				// 		customIcon: false,
-				// 		pagePath: "/pages/result/result" //成果页面地址
-				// 	},
-				// ],
 				midButton: true,
 				inactiveColor: '#909399',
 				activeColor: '#5098FF',
@@ -127,6 +92,7 @@
 		methods: {
 			goto(id) {
 				var articleid = JSON.stringify(id)
+				console.log(articleid)
 				uni.navigateTo({
 					url: "/pages/article_details/article_details?articleid=" + articleid
 				})

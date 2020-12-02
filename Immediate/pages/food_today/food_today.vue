@@ -11,31 +11,24 @@
 
 		<view class="food">
 
-
-			<view>
+			<view class="timebox">
 				<picker :range="years" @change="yearChange" mode="multiSelector" class="time">
-					{{ years[0][yearsIndex1] }} 年 {{ years[1][yearsIndex2]  }} 月 {{ years[2][yearsIndex2]  }}
+					{{ years[0][yearsIndex1] }} 年 {{ years[1][yearsIndex2]  }} 月 {{ years[2][yearsIndex3]  }}
 				</picker>
 			</view>
 
-
-
-
-
 		</view>
-		<view>
-			<view>
+		<view class="cards">
+			<view class="cardbox">
 				<scroll-view scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-Y" @scrolltoupper="upper"
 				 @scrolltolower="lower" @scroll="scroll">
 					<view id='Article'>
-						<!-- v-for 循环从数据库中传回的 articleLiet  并生成 card -->
-						<!-- 注册点击事件，跳转到相应的推文界面 -->
 						<u-card v-for="article in articleList" :key="index1" :title="article.title" :sub-title="article.time" :thumb="article.cover"
 						 @click='goto(article.url)' :show-foot="false">
 							<view class="card" slot="body">
 								<u-row class="row1">
 									<u-col class='col' span="9" align="left">
-										<u-icon name="clock-fill" size="34" color="" :label='article.time' margin=></u-icon>
+										<u-icon name="https://ftp.bmp.ovh/imgs/2020/12/153683ddcac4ce1e.png" size="34" color="" label="999kcal"></u-icon>
 									</u-col>
 
 								</u-row>
@@ -63,10 +56,11 @@
 
 		data() {
 			return {
+				date1:"",
 				years: [
-					["请选择年份", 2019, 2020, 2021],
-					["请选择月份", 10, 11, 12],
-					["请选择日期", 1, 2, 3]
+					['2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
+					['01', '02', '03', '04', '05','06','07' , '08', '09', '10', '11', '12'],
+					['01', '02', '03','04' , '05', '06','07','08' , '09', '10', '11', '12', '13', '14', '15', '16', '17','18','19','20','21', '22', '23','24','25','26', '27', '28', '29', '30']
 				],
 				yearsIndex1: 0,
 				yearsIndex2: 0,
@@ -92,8 +86,6 @@
 				}],
 
 				num1: '能量',
-
-				// text:"1",
 				fname: "",
 				current: 2,
 				articleList: [{
@@ -124,31 +116,78 @@
 					},
 
 				],
+				current: 2,
+				list: [{
+						iconPath: "https://s3.ax1x.com/2020/11/20/DMMQC4.png",
+						selectedIconPath: "https://s3.ax1x.com/2020/11/20/DMMl8J.png",
+						text: '主页',
+						isDot: true,
+						customIcon: false,
+						pagePath: "/pages/index/index" //主页页面地址
+					},
+					{
+						iconPath: "https://s3.ax1x.com/2020/11/20/DMMJDx.png",
+						selectedIconPath: "https://s3.ax1x.com/2020/11/20/DMMYb6.png",
+						text: '锻炼',
+						customIcon: false,
+						pagePath: "/pages/clock/clock" //锻炼页面地址
+					},
+					{
+						iconPath: "https://s3.ax1x.com/2020/11/20/DMMK5F.png",
+						selectedIconPath: "https://s3.ax1x.com/2020/11/20/DMMGK1.png",
+						text: '食谱',
+						customIcon: false,
+						pagePath: "/pages/food_menu/food_menu" //食谱页面地址
+					},
+					{
+						iconPath: "https://s3.ax1x.com/2020/11/20/DMM3vR.png",
+						selectedIconPath: "https://s3.ax1x.com/2020/11/20/DMM129.png",
+						text: '成果',
+						isDot: false,
+						customIcon: false,
+						pagePath: "/pages/result/result" //成果页面地址
+					},
+				],
 
 			}
+		},
+		onLoad() {
+			var dat = new Date();
+			this.yearsIndex1=dat.getFullYear()-2018;
+			this.yearsIndex2=dat.getMonth();
+			this.yearsIndex3=dat.getDate()-1;
+			this.date1=this.years[0][this.yearsIndex1]+'-'
+			const app =getApp();
+			const db  = uniCloud.database();
+			db.collection('food_today').where({
+				use_openid:app.globalData.user_openid,
+				
+			})
+			
 		},
 		onPageScroll(e) {
 			this.scrollTop = e.scrollTop;
 		},
 		methods: {
+			getTime: function() {
+				var date = new Date(),
+					year = date.getFullYear(),
+					month = date.getMonth() + 1,
+					day = date.getDate(),
+					hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours(),
+					minute = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes(),
+					second = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+				month >= 1 && month <= 9 ? (month = "0" + month) : "";
+				day >= 0 && day <= 9 ? (day = "0" + day) : "";
+				var timer = year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
+				return timer;
+			},
 			yearChange: function(e) {
-				console.log(e)
-				//获得对象的 detail的 value
-				//通过数组的下标改变显示在页面的值
 				this.yearsIndex1 = e.detail.value[0];
 				this.yearsIndex2 = e.detail.value[1];
 				this.yearsIndex3 = e.detail.value[2];
-			},
-			formSubmit: function(e) {
-				console.log('form发生了submit事件，携带数据为：' + JSON.stringify(e.detail.value))
-				var formdata = e.detail.value
-				// uni.showModal({
-				// 	content: '表单数据内容：' + JSON.stringify(formdata),
-				// 	showCancel: false
-				// });
-			},
-			input: function(event) {
-				this.fname = event.target.value
+				console.log(this.yearsIndex2);
+				console.log(this.yearsIndex3);
 			},
 			changePage(index) {
 				console.log(index);
@@ -165,32 +204,6 @@
 						url: "/pages/food_today/food_today"
 					});
 				}
-			},
-			get() {
-				uni.showLoading({
-					title: '处理中...'
-				})
-				uniCloud.callFunction({
-					name: 'get',
-					data: {
-						fname: this.fname
-					}
-				}).then((res) => {
-					uni.hideLoading()
-					uni.showModal({
-						content: `查询成功，获取数据列表为：${JSON.stringify(res.result.data)}`,
-						showCancel: false
-					})
-
-					console.log(res)
-				}).catch((err) => {
-					uni.hideLoading()
-					uni.showModal({
-						content: `查询失败，错误信息为：${err.message}`,
-						showCancel: false
-					})
-					console.error(err)
-				})
 			},
 			goto(url) {
 				console.log(url)
@@ -228,11 +241,15 @@
 
 	}
 
+	.timebox {
+		margin: 9rpx 50rpx 0 50rpx;
+	}
+
 	.time {
 		posion: absolute;
-		margin: 9rpx 0 0 50rpx;
+		margin: 9rpx 50rpx 0 50rpx;
 		height: 50rpx;
-		font-size: 4rpx;
+		font-size: 30rpx;
 
 	}
 
@@ -252,6 +269,12 @@
 		justify-content: flex-start;
 		align-items: flex-start;
 		text-align: center;
+		background-color: rgba(41, 121, 255, 0.5);
+	}
+
+	.cards {
+		background-color: rgba(41, 121, 255, 0.5);
+		padding: 0 10% 14% 0;
 	}
 
 	.card {
@@ -260,6 +283,8 @@
 		width: 100%;
 		align-items: center;
 		text-align: center;
+		margin: 0 75rpx 0 0;
+		/* background-color: rgba(149,189,255,0.5); */
 
 	}
 
@@ -287,14 +312,24 @@
 
 	}
 
+	.row1 {
+		display: absolute;
+		margin: 0 0 0 0;
+		height: 50rpx;
+		font-size: 10rpx;
+		font-weight: bold;
+
+	}
+
 	.scroll-Y {
 		height: auto;
+		margin: 0 200% 0 0;
 	}
 
 	.card {
 		display: flex;
 		width: 550rpx;
-		height: 120rpx;
+		height: 55rpx;
 
 	}
 </style>

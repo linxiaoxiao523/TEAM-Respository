@@ -10,7 +10,6 @@
 				<view>
 					<text class="title">{{name}}</text>
 				</view>
-				<!-- 文本内容用<view>和<text class=...>控制，view可以换行，text是行内元素 -->
 				<view>
 					
 					<text>{{title}}</text>

@@ -22,7 +22,21 @@
 					}
 				}
 			}
-		}, {
+		},
+		{
+			"path": "pages/exercise/exercise",
+			"style": {
+				"navigationBarTitleText": "虚拟健身房"
+			}
+		},
+		{
+			"path": "pages/exercise/room",
+			"style": {
+				"navigationBarTitleText": "健身房"
+			}
+		},
+
+		{
 			"path": "pages/food_custom/food_custom",
 			"style": {
 				"navigationBarTitleText": "自定义食谱"

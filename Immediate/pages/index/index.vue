@@ -110,6 +110,7 @@
 					url: "/pages/article_details/article_details?articleid=" + articleid
 				})
 			},
+			
 			getRandomInt(min, max) {
 				return Math.floor(Math.random() * (max - min + 1)) + min;
 			},
