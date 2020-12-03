@@ -140,7 +140,7 @@
 				var myDate = new Date();
 				const db = uniCloud.database();
 				db.collection("user_weight")
-					.orderBy('time','desc')
+					.orderBy('time','asc')
 					.where({
 						user_openid: getApp().globalData.user_openid
 					})

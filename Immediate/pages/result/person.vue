@@ -127,7 +127,7 @@
 					});
 				} else if (index == 1) {
 					uni.navigateTo({
-						url: "/pages/result/person"
+						url: "/pages/result/record"
 					});
 				} else if (index == 2) {
 					uni.navigateTo({

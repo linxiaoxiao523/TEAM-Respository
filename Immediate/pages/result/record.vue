@@ -240,7 +240,7 @@
 							// });
 							uni.showModal({
 								title: '提示',
-								content: '请先输入身高体重哦!',
+								content: '暂无数据，开始锻炼吧!',
 								success: function(res) {
 									if (res.confirm) {
 										console.log('用户点击确定');

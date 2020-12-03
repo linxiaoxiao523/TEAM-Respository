@@ -41,12 +41,12 @@
 			return {
 				bgColor: "#ffffff",
 				banner: [{
-						picture: "https://pcsdata.baidu.com/thumbnail/96fcbd52cj7aefbf6cf61dd743ca61c5?fid=3716426565-16051585-1118935599170299&rt=pr&sign=FDTAER-yUdy3dSFZ0SVxtzShv1zcMqd-BgH0fuxReRgjVlXtjqToY0KAwgo%3D&expires=2h&chkv=0&chkbd=0&chkpc=&dp-logid=3813560643&dp-callid=0&time=1606395600&size=c1600_u1600&quality=100&vuk=-&ft=video",
-						title: '打败朋友圈的英式早餐'
+						picture: "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-aliyun-upkxgsyho6pe3f88dd/5e4e2d00-358b-11eb-b997-9918a5dda011.png",
+						title: '自律的人生'
 					},
 					{
-						picture: "https://pcsdata.baidu.com/thumbnail/57534ad35m2e3503c9ddd744f33d9e8e?fid=3716426565-16051585-15977188662631&rt=pr&sign=FDTAER-yUdy3dSFZ0SVxtzShv1zcMqd-SqxEfNaEkPtQLGjRvSQd7VRqLF8%3D&expires=2h&chkv=0&chkbd=0&chkpc=&dp-logid=3939509035&dp-callid=0&time=1606399200&size=c1600_u1600&quality=100&vuk=-&ft=video",
-						title: '亲测！连续晨跑一个月后，谈谈我的真实感受'
+						picture: "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-aliyun-upkxgsyho6pe3f88dd/57fd5ac0-358b-11eb-8a36-ebb87efcf8c0.png",
+						title: '向着健康生活进发'
 					},
 
 				],
