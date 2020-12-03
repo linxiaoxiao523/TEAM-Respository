@@ -72,7 +72,9 @@
 		},
 		onLoad() {
 			const db = uniCloud.database()
-			db.collection('article').get({
+			db.collection('article')
+			.orderBy('time desc')
+			.get({
 				getCount: true,
 			}).then(res => {
 				console.log(res);
@@ -82,6 +84,7 @@
 						"title": res.result.data[i].title,
 						"cover": res.result.data[i].picture,
 						"count": res.result.data[i].tapnum,
+						"time": res.result.data[i].time
 					});
 				}
 			})
