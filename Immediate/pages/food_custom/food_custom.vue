@@ -9,7 +9,7 @@
 						({{foodItem.calories}}千卡/100g)
 					</view>
 					<view class="inputNumber">
-						<u-number-box :value=0 :step=25 :max=500 :input-height="40" @change="amountChange($event, foodItem)"></u-number-box>g
+						<u-number-box :value=foodItem.mass :step=25 :max=500 :input-height="40" @change="amountChange($event, foodItem)"></u-number-box>g
 					</view>
 				</view>
 			</u-collapse-item>
@@ -18,7 +18,7 @@
 		<view style="text-align: right;">
 			重量：{{weight}}g　热量：{{calories}}大卡
 			<br>
-			<u-button>记录</u-button>
+			<u-button @click="button_submit()">记录</u-button>
 		</view>
 		<div>
 			<u-tabbar v-model="current" :show="true" :bg-color="bgColor" :border-top="borderTop" :list="list" :inactive-color="inactiveColor"
@@ -218,6 +218,32 @@
 					}
 				}
 			},
+			getTime: function() {
+				var date = new Date(),
+					year = date.getFullYear(),
+					month = date.getMonth() + 1,
+					day = date.getDate(),
+					hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours(),
+					minute = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes(),
+					second = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+				month >= 1 && month <= 9 ? (month = "0" + month) : "";
+				day >= 0 && day <= 9 ? (day = "0" + day) : "";
+				var timer = hour + ':' + minute + ':' + second;
+				return timer;
+			},
+			getday: function() {
+				var date = new Date(),
+					year = date.getFullYear(),
+					month = date.getMonth() + 1,
+					day = date.getDate(),
+					hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours(),
+					minute = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes(),
+					second = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+				month >= 1 && month <= 9 ? (month = "0" + month) : "";
+				day >= 0 && day <= 9 ? (day = "0" + day) : "";
+				var timer = year + '-' + month + '-' + day;
+				return timer;
+			},
 			changePage(index) {
 				console.log(index);
 				if (index == 0) {
@@ -233,6 +259,41 @@
 						url: "/pages/food_today/food_today"
 					});
 				}
+			},
+			button_submit() {
+				let that = this;
+				const app = getApp();
+				const db = uniCloud.database();
+				for (var i in this.foodList) {
+					for (var j in this.foodList[i].body) {
+						if (this.foodList[i].body[j].mass) {
+							db.collection('food_today').add({
+									use_openid: app.globalData.user_openid,
+									// recipes_id: that.menuid.toString(),
+									recipes_title: this.foodList[i].body[j].name.toString(),
+									recipes_calories: (this.foodList[i].body[j].calories * this.foodList[i].body[j].mass / 100).toString(),
+									time: that.getTime(),
+									day: that.getday()
+								}).then(res => {
+									uni.showToast({
+										title: "提交成功!"
+									});
+									that.isDisabled = true;
+									that.submit_text = "已提交";
+								})
+								.catch(err => {
+									console.log(err);
+									uni.showToast({
+										title: "提交失败!"
+									})
+								});
+							this.foodList[i].body[j].mass = 0;
+							this.weight = 0;
+							this.calories = 0;
+						}
+					}
+				}
+
 			}
 		}
 	}
