@@ -28,9 +28,9 @@
 									<u-icon name="clock-fill" size="34" color="" :label='article.time'></u-icon>
 								</u-col>
 
-								<u-col class='col' span="" align="">
+<!-- 								<u-col class='col' span="" align="">
 									<u-icon name="heart-fill" size="34" color="red" :label="article.count"></u-icon>
-								</u-col>
+								</u-col> -->
 							</u-row>
 						</view>
 					</u-card>
@@ -83,7 +83,6 @@
 						"id": res.result.data[i]._id,
 						"title": res.result.data[i].title,
 						"cover": res.result.data[i].picture,
-						"count": res.result.data[i].tapnum,
 						"time": res.result.data[i].time
 					});
 				}
