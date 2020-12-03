@@ -38,7 +38,7 @@
 			</view>
 		</view>
 		<view class="footer">
-			<button id="submit" type="primary" :disabled="isDisabled" @click="button_submit" >{{submit_text}}</button>
+			<button id="submit" type="primary" :disabled="isDisabled" @click="button_submit">{{submit_text}}</button>
 		</view>
 	</view>
 </template>
@@ -57,6 +57,8 @@
 		},
 		data() {
 			return {
+				// day:"",
+				// time:"",
 				menuid: '', //对应_id
 				name: '',
 				introduction: '',
@@ -95,7 +97,7 @@
 			let that = this;
 			that.menuid = options.menuid.replace(/""/g, "");
 			that.menuid = JSON.parse(that.menuid);
-			that.submit_text="提交";
+			that.submit_text = "提交";
 			that.isDisabled = false;
 			// console.log(this.textObj)
 			console.log(options.menuid)
@@ -138,7 +140,20 @@
 					second = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
 				month >= 1 && month <= 9 ? (month = "0" + month) : "";
 				day >= 0 && day <= 9 ? (day = "0" + day) : "";
-				var timer = year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
+				var timer =  hour + ':' + minute + ':' + second;
+				return timer;
+			},
+			getday: function() {
+				var date = new Date(),
+					year = date.getFullYear(),
+					month = date.getMonth() + 1,
+					day = date.getDate(),
+					hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours(),
+					minute = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes(),
+					second = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+				month >= 1 && month <= 9 ? (month = "0" + month) : "";
+				day >= 0 && day <= 9 ? (day = "0" + day) : "";
+				var timer = year + '-' + month + '-' + day ;
 				return timer;
 			},
 			button_submit() {
@@ -150,13 +165,14 @@
 						recipes_id: that.menuid.toString(),
 						recipes_title: that.name.toString(),
 						recipes_calories: that.tableList1[0].content.toString(),
-						time: that.getTime()
+						time: that.getTime(),
+						day:that.getday()
 					}).then(res => {
 						uni.showToast({
 							title: "提交成功!"
 						});
-						that.isDisabled=true;
-						that.submit_text="已提交";
+						that.isDisabled = true;
+						that.submit_text = "已提交";
 					})
 					.catch(err => {
 						console.log(err);

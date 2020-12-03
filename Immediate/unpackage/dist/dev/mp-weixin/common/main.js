@@ -107,7 +107,9 @@ var _default =
   },
   onHide: function onHide() {
     console.log('App Hide');
-  } };exports.default = _default;
+  },
+  globalData: {
+    user_openid: "" } };exports.default = _default;
 
 /***/ }),
 
