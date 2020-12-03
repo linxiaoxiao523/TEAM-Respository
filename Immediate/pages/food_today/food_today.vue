@@ -13,7 +13,7 @@
 
 			<view class="timebox">
 				<picker :range="years" @change="yearChange" mode="multiSelector" class="time">
-					{{ years[0][yearsIndex1] }} 年 {{ years[1][yearsIndex2]  }} 月 {{ years[2][yearsIndex3]  }}
+					选择日期：{{ years[0][yearsIndex1] }} 年 {{ years[1][yearsIndex2]  }} 月 {{ years[2][yearsIndex3]  }}日
 				</picker>
 			</view>
 
@@ -23,14 +23,12 @@
 				<scroll-view scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-Y" @scrolltoupper="upper"
 				 @scrolltolower="lower" @scroll="scroll">
 					<view id='Article'>
-						<u-card v-for="article in articleList" :key="index1" :title="article.title" :sub-title="article.time" :thumb="article.cover"
-						 @click='goto(article.url)' :show-foot="false">
+						<u-card  v-for="food in foodList" :key="index1" :title="food.title" :sub-title="food.time" :show-foot="false">
 							<view class="card" slot="body">
 								<u-row class="row1">
 									<u-col class='col' span="9" align="left">
-										<u-icon name="https://ftp.bmp.ovh/imgs/2020/12/153683ddcac4ce1e.png" size="34" color="" label="999kcal"></u-icon>
+										<u-icon name="https://ftp.bmp.ovh/imgs/2020/12/153683ddcac4ce1e.png" size="34" :label="food.calories"></u-icon>
 									</u-col>
-
 								</u-row>
 							</view>
 						</u-card>
@@ -56,11 +54,13 @@
 
 		data() {
 			return {
-				date1:"",
+				date1: "",
 				years: [
 					['2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
-					['01', '02', '03', '04', '05','06','07' , '08', '09', '10', '11', '12'],
-					['01', '02', '03','04' , '05', '06','07','08' , '09', '10', '11', '12', '13', '14', '15', '16', '17','18','19','20','21', '22', '23','24','25','26', '27', '28', '29', '30']
+					['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'],
+					['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19',
+						'20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30'
+					]
 				],
 				yearsIndex1: 0,
 				yearsIndex2: 0,
@@ -88,34 +88,7 @@
 				num1: '能量',
 				fname: "",
 				current: 2,
-				articleList: [{
-						cover: 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3194055763,3664834051&fm=26&gp=0.jpg',
-						title: '第一餐',
-						time: '2020-02-02',
-
-						url: 'http://www.baidu.com'
-					},
-					{
-						// 	cover: require('@/assets/images/article-cover-2.jpg'),
-
-						cover: 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3194055763,3664834051&fm=26&gp=0.jpg',
-						title: '第二餐',
-						time: '2020-02-01',
-
-
-						url: 'http://www.baidu.com'
-					},
-					{
-						// 	cover: require('@/assets/images/article-cover-2.jpg'),
-
-						cover: 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3194055763,3664834051&fm=26&gp=0.jpg',
-						title: '第三餐',
-						time: '2020-02-01',
-
-						url: 'http://www.baidu.com'
-					},
-
-				],
+				foodList: [],
 				current: 2,
 				list: [{
 						iconPath: "https://s3.ax1x.com/2020/11/20/DMMQC4.png",
@@ -153,17 +126,30 @@
 		},
 		onLoad() {
 			var dat = new Date();
-			this.yearsIndex1=dat.getFullYear()-2018;
-			this.yearsIndex2=dat.getMonth();
-			this.yearsIndex3=dat.getDate()-1;
-			this.date1=this.years[0][this.yearsIndex1]+'-'
-			const app =getApp();
-			const db  = uniCloud.database();
+			this.yearsIndex1 = dat.getFullYear() - 2018;
+			this.yearsIndex2 = dat.getMonth();
+			this.yearsIndex3 = dat.getDate() - 1;
+			this.date1 = this.years[0][this.yearsIndex1].toString() + '-' + this.years[1][this.yearsIndex2].toString() + '-' +
+				this.years[2][this.yearsIndex3].toString();
+			const app = getApp();
+			const db = uniCloud.database();
 			db.collection('food_today').where({
-				use_openid:app.globalData.user_openid,
-				
-			})
-			
+					use_openid: app.globalData.user_openid,
+					day: this.date1
+				})
+				.get()
+				.then(res => {
+					console.log(res);
+					for (var i = 0; i < res.result.data.length; i++) {
+						this.foodList.push({
+							"id": res.result.data[i]._id,
+							"title": res.result.data[i].recipes_title,
+							"calories": res.result.data[i].recipes_calories,
+							"time": res.result.data[i].time,
+							"day": res.result.data[i].day
+						})
+					}
+				})
 		},
 		onPageScroll(e) {
 			this.scrollTop = e.scrollTop;
@@ -183,11 +169,32 @@
 				return timer;
 			},
 			yearChange: function(e) {
+				this.foodList = [];
+				var date = new Date();
 				this.yearsIndex1 = e.detail.value[0];
 				this.yearsIndex2 = e.detail.value[1];
 				this.yearsIndex3 = e.detail.value[2];
-				console.log(this.yearsIndex2);
-				console.log(this.yearsIndex3);
+				this.date1 = this.years[0][this.yearsIndex1].toString() + '-' + this.years[1][this.yearsIndex2].toString() + '-' +
+					this.years[2][this.yearsIndex3].toString();
+				const app = getApp();
+				const db = uniCloud.database();
+				db.collection('food_today').where({
+						use_openid: app.globalData.user_openid,
+						day: this.date1
+					})
+					.get()
+					.then(res => {
+						console.log(res);
+						for (var i = 0; i < res.result.data.length; i++) {
+							this.foodList.push({
+								"id": res.result.data[i]._id,
+								"title": res.result.data[i].recipes_title,
+								"calories": res.result.data[i].recipes_calories,
+								"time": res.result.data[i].time,
+								"day": res.result.data[i].day
+							})
+						}
+					})
 			},
 			changePage(index) {
 				console.log(index);
@@ -242,7 +249,8 @@
 	}
 
 	.timebox {
-		margin: 9rpx 50rpx 0 50rpx;
+		margin: 9rpx 50rpx 0 110rpx;
+		text-align: center;
 	}
 
 	.time {
@@ -261,8 +269,15 @@
 		font-weight: bold;
 	}
 
-	.food {
 
+	#Article {
+		postion: absolute;
+		background-color: rgba($color:#2979ff, $alpha: 0.5);
+		height: 100%;
+		padding-top: 2%;
+	
+	}
+	.food {
 		display: flex;
 		flex-direction: row;
 		width: 100%;
@@ -274,19 +289,20 @@
 
 	.cards {
 		background-color: rgba(41, 121, 255, 0.5);
-		padding: 0 10% 14% 0;
+		padding: 0 10% 0 0;
+		width:100%;
 	}
 
-	.card {
+/* 	.card {
 		display: flex;
 		flex-direction: column;
 		width: 100%;
 		align-items: center;
 		text-align: center;
-		margin: 0 75rpx 0 0;
+		margin: 0 0 0 0;
 		/* background-color: rgba(149,189,255,0.5); */
-
-	}
+/* 
+	} */
 
 	.number {
 		display: flex;
@@ -326,10 +342,10 @@
 		margin: 0 200% 0 0;
 	}
 
-	.card {
+/* 	.card {
 		display: flex;
 		width: 550rpx;
 		height: 55rpx;
 
-	}
+	} */
 </style>
