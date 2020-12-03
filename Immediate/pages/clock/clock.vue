@@ -264,7 +264,6 @@
 							console.log(err)
 						})
 				}
-				this.init_time();
 			}
 		},
 	}
