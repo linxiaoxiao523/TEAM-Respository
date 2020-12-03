@@ -8,7 +8,7 @@
 		:active-color="activeColor"></u-tabbar> -->
 	
 		<view class="qiun-charts" >
-			<canvas canvas-id="canvasLineA" id="canvasLineA" class="charts" @touchstart="touchLineA"></canvas>
+			<canvas canvas-id="canvasLineA" id="canvasLineA" class="charts" disable-scroll=true @touchstart="touchLineA" @touchmove="moveLineA" @touchend="touchEndLineA"></canvas>
 <!-- 			<view style="text-align: center;line-height: 30rpx;font-size: 30rpx;">体重变化图</view>
  -->		</view>
 		<view class="bigpaper">
@@ -17,29 +17,29 @@
 			</view>
 		
 			<view class="paper">
-			<u-grid :col="2" bg-color="grey">
-				<u-grid-item>
-					<view class="grid-text">开始时间:{{month}}月{{day}}日</view>
-				</u-grid-item>	
-				<u-grid-item>	
-					<view class="grid-text">原体重:{{for_weight}} kg</view>
-				</u-grid-item>
-				<u-grid-item>
-					<view class="grid-text">当前体重:{{now_weight}} kg</view>
-				</u-grid-item>
-				<u-grid-item>
-					<view class="grid-text">目标体重:{{goal_weight}} kg</view>
-				</u-grid-item>
+				<u-grid :col="2" bg-color="grey">
+					<u-grid-item>
+						<view class="grid-text">开始时间:{{month}}月{{day}}日</view>
+					</u-grid-item>	
+					<u-grid-item>	
+						<view class="grid-text">原体重:{{for_weight}} kg</view>
+					</u-grid-item>
+					<u-grid-item>
+						<view class="grid-text">当前体重:{{now_weight}} kg</view>
+					</u-grid-item>
+					<u-grid-item>
+						<view class="grid-text">目标体重:{{goal_weight}} kg</view>
+					</u-grid-item>
 				</u-grid>
-			<u-grid :col="1" bg-color="grey">
-			<u-grid-item>
-				<view class="grid-text">健康建议:{{advice}}</view>	
-			</u-grid-item>			
-			</u-grid>
+				<!-- <u-grid :col="1" bg-color="grey">
+					<u-grid-item>
+						<view class="grid-text">健康建议:{{advice}}</view>	
+					</u-grid-item>			
+				</u-grid> -->
 			</view>
 			
 			<view class="blank">.
-				</view>
+			</view>
 			
 		</view>
 	
@@ -121,7 +121,7 @@
 					});
 				} else if (index == 1) {
 					uni.navigateTo({
-						url: "/pages/result/person"
+						url: "/pages/result/record"
 					});
 				} else if (index == 2) {
 					uni.navigateTo({
@@ -130,22 +130,6 @@
 				}
 			},
 			getServerData(){
-				// uni.request({
-				// 	url: 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-aliyun-lpqbmpsqnrys9700cd/7fa61af0-2b5c-11eb-bd01-97bc1429a9ff.json',
-				// 	data:{
-				// 	},
-				// 	success: function(res) {
-				// 		console.log(res.data.data)
-				// 		let LineA={categories:[],series:[]};
-				// 		//这里我后台返回的是数组，所以用等于，如果您后台返回的是单条数据，需要push进去
-				// 		LineA.categories=res.data.data.LineA.categories;
-				// 		LineA.series=res.data.data.LineA.series;
-				// 		_self.showLineA("canvasLineA",LineA);
-				// 	},
-				// 	fail: () => {
-				// 		_self.tips="网络错误，小程序端请检查合法域名";
-				// 	},
-				// });
 				let LineA = {
 				  "categories": [],
 				  "series": [{
@@ -163,7 +147,7 @@
 					.get()
 					.then((res) => {
 						if(res.result.data.length > 0){
-							for(var i = 0; i < (res.result.data.length >= 7 ? 7 : res.result.data.length) ; i++){
+							for(var i = 0; i < res.result.data.length; i++){
 								LineA.categories[i] = res.result.data[i].time;
 								LineA.series[0].data[i] = res.result.data[i].weight;
 							} 
@@ -215,9 +199,13 @@
 					series: chartData.series,
 					animation: true,
 					xAxis: {
+						disableGrid:false,
 						type:'grid',
 						gridColor:'#CCCCCC',
 						gridType:'dash',
+						itemCount:6,
+						scrollShow:true,
+						scrollAlign:'right',
 						dashLength:8
 					},
 					yAxis: {
@@ -239,7 +227,15 @@
 				});
 				
 			},
-			touchLineA(e) {
+			touchLineA(e){
+				canvaLineA.scrollStart(e);
+			},
+			moveLineA(e) {
+				canvaLineA.scroll(e);
+			},
+			touchEndLineA(e) {
+				canvaLineA.scrollEnd(e);
+				//下面是toolTip事件，如果滚动后不需要显示，可不填写
 				canvaLineA.showToolTip(e, {
 					format: function (item, category) {
 						return category + ' ' + item.name + ':' + item.data 

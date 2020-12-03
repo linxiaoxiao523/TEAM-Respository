@@ -104,6 +104,12 @@
 			"style": {
 				"navigationBarTitleText": "个人"
 			}
+		},
+		{
+			"path": "pages/result/record",
+			"style": {
+				"navigationBarTitleText": "运动记录"
+			}
 		}
 	],
 	"globalStyle": {
