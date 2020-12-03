@@ -13,7 +13,7 @@
 
 			<u-col>
 				<p class="column2" style="float: left;">当前消耗: {{calorie1.toFixed(2)}} kcal</p>
-<!-- 				<u-icon name="star-fill" class="column4" style="float: left;"></u-icon> -->
+				<!-- 				<u-icon name="star-fill" class="column4" style="float: left;"></u-icon> -->
 			</u-col>
 		</u-row>
 
@@ -222,8 +222,8 @@
 					hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours(),
 					minute = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes(),
 					second = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
-				month >= 1 && month <= 9 ? (month = "0" + month) : "";
-				day >= 0 && day <= 9 ? (day = "0" + day) : "";
+				// month >= 1 && month <= 9 ? (month = "0" + month) : "";
+				// day >= 0 && day <= 9 ? (day = "0" + day) : "";
 				var timer = year + '/' + month + '/' + day;
 				return timer;
 			},
@@ -242,7 +242,7 @@
 				this.minute = "00";
 				this.second = "00";
 				this.calorie1 = 0;
-				
+
 				this.show1 = false;
 			},
 			todb() {
@@ -325,18 +325,18 @@
 		height: 150rpx;
 	}
 
-	.button2 {
-		padding: 25rpx 0 0 0;
-		height: 150rpx;
-	}
+	// .button2 {
+	// 	padding: 25rpx 0 0 0;
+	// 	height: 150rpx;
+	// }
 
 	.button3 {
 		height: 150rpx;
 	}
 
 	.buttons2 {
-
-		position: absolute;
+	filter:Alpha(opacity=0.3);
+		 position: absolute;
 		left: 50%;
 		top: 50%;
 		display: flex;
