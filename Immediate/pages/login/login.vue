@@ -40,25 +40,31 @@
 					success: res => {
 						//code值(5分钟失效)
 						console.info(res.code);
+						that.code = res.code
 						//小程序appid
-						let appid = 'wxcb70e32f42968687'; //我瞎写的
-						//小程序secret
-						let secret = '26e5c9d1b35ac21df0c0c9600886a266'; //我瞎写的
-						//wx接口路径
-						let url = 'https://api.weixin.qq.com/sns/jscode2session?appid=' + appid + '&secret=' + secret + '&js_code=' +
-							res.code + '&grant_type=authorization_code';
-						uni.request({
-							url: url, // 请求路径
-							method: 'GET', //请求方式
-							success: result => {
-								//响应成功
-								//这里就获取到了openid了
-								
-								that.OpenId = result.data.openid;
-								uni.setStorage({
-									key: 'user',
-									data: result.data.openid
-								});
+						// let appid = 'wxcb70e32f42968687'; //我瞎写的
+						// //小程序secret
+						// let secret = '26e5c9d1b35ac21df0c0c9600886a266'; //我瞎写的
+						// //wx接口路径
+						// let url = 'https://api.weixin.qq.com/sns/jscode2session?appid=' + appid + '&secret=' + secret + '&js_code=' +
+						// 	res.code + '&grant_type=authorization_code';
+
+						// uni.request({
+						// 	url: url, // 请求路径
+						// 	method: 'GET', //请求方式
+						// 	success: result => {
+						// 		//响应成功
+						// 		//这里就获取到了openid了
+
+						uniCloud.callFunction({
+								name: 'login',
+								data: {
+									code: that.code
+								}
+							})
+							.then(res => {
+								that.OpenId = res.result.res.data.openid;
+								console.log(that.OpenId)
 								uni.getUserInfo({
 									provider: 'weixin',
 									success: function(wxLoginres) {
@@ -70,34 +76,33 @@
 										const db = uniCloud.database();
 										db.collection('user')
 											.where({
-												openid:that.OpenId
+												openid: that.OpenId
 											})
 											.get()
 											.then((res) => {
 												// console.log(res);
-												if (res.result.data.length <=0) {
+												if (res.result.data.length <= 0) {
 													// const db = uniCloud.database();
 													db.collection('user').add({
 														nickname: nickName,
 														openid: that.OpenId,
 														// sex: sex,
-														head_url:avatarUrl
+														head_url: avatarUrl
 													})
-												}
-												else{
+												} else {
 													db.collection('user').where({
-														openid:that.OpenId
+														openid: that.OpenId
 													}).update({
 														nickname: nickName,
 														openid: that.OpenId,
 														// sex: sex,
-														head_url:avatarUrl
+														head_url: avatarUrl
 													})
 												}
 												// res 为数据库查询结果
 												console.log(res);
 												const app = getApp();
-												app.globalData.user_openid=that.OpenId;
+												app.globalData.user_openid = that.OpenId;
 												console.log(app.globalData.user_openid);
 											}).catch((err) => {
 												// err.message 错误信息
@@ -108,20 +113,26 @@
 								
 								
 								
-											uni.setStorageSync('isCanUse', false);
+										uni.setStorageSync('isCanUse', false);
 								
 								
-											uni.reLaunch({
-												url: '/pages/index/index',
-											});
+										uni.reLaunch({
+											url: '/pages/index/index',
+										});
 									},
 									fail(res) {
 										console.log(res)
 									}
 								});
-							},
-							fail: err => {} //失败
+							});
+						uni.setStorage({
+							key: 'user',
+							data: that.OpenId
 						});
+						
+						// 	},
+						// 	fail: err => {} //失败
+						// });
 					}
 				});
 			},
@@ -139,12 +150,12 @@
 	}
 
 	.login {
-		background-color:white;
+		background-color: white;
 		width: 35%;
 		opacity: 0.6;
-		color:black;
-		border-radius:30rpx;
-		margin:0 0 0 250rpx;
+		color: black;
+		border-radius: 30rpx;
+		margin: 0 0 0 250rpx;
 		font-size: 35rpx;
 		margin-top: 500rpx;
 	}
