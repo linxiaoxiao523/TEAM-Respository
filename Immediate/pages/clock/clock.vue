@@ -91,17 +91,17 @@
 				totalCount: 0,
 				timer: null,
 				options1: [{
-						label: '跑步    ',
+						label: '跑步',
 						value: 0,
 						calorie: 455 //表示455kcal/h
 					},
 					{
-						label: '步行    ',
+						label: '步行',
 						value: 1,
 						calorie: 162 //表示162kcal/h
 					},
 					{
-						label: '快走    ',
+						label: '快走',
 						value: 2,
 						calorie: 292 //表示292kcal/h
 					},
@@ -111,7 +111,7 @@
 						calorie: 260 //表示260kcal/h
 					},
 					{
-						label: '游泳    ',
+						label: '游泳',
 						value: 4,
 						calorie: 650 //表示650kcal/h
 					},
@@ -242,7 +242,7 @@
 				this.minute = "00";
 				this.second = "00";
 				this.calorie1 = 0;
-
+				this.count = 0;
 				this.show1 = false;
 			},
 			todb() {
@@ -264,6 +264,7 @@
 							console.log(err)
 						})
 				}
+				this.init_time();
 			}
 		},
 	}
@@ -335,8 +336,8 @@
 	}
 
 	.buttons2 {
-	filter:Alpha(opacity=0.3);
-		 position: absolute;
+		filter: Alpha(opacity=0.3);
+		position: absolute;
 		left: 50%;
 		top: 50%;
 		display: flex;
