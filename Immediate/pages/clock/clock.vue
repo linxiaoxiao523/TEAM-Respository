@@ -24,16 +24,13 @@
 
 		<u-row class="buttons" gutter="4">
 			<u-col span="4">
-				<u-button @click="op1" type="primary" :plain="true" class="button1">{{state}}</u-button>
+				<button @click="op1" type="primary" :plain="true" class="button1">{{state}}</button>
 			</u-col>
+<!-- 			<u-col span="4">
+
+			</u-col> -->
 			<u-col span="4">
-				<!-- 链接到其他页面 -->
-				<navigator url="/pages/exercise/exercise">
-					<button type="primary" class="button2"> 虚拟健身房</button>
-				</navigator>
-			</u-col>
-			<u-col span="4">
-				<u-button @click="get_time" type="primary" :plain="true" class="button3">停止并查看结果</u-button>
+				<button @click="get_time" type="primary" :plain="true" class="button3">停止并查看结果</button>
 			</u-col>
 		</u-row>
 
@@ -270,75 +267,76 @@
 </script>
 
 <style lang="scss" scoped>
-	.column1 {
-		font-family: SimHei;
-		position: absolute;
-		top: 2%;
-		display: flex;
-		justify-content: flex-start;
-	}
-
-	.column2 {
-		position: absolute;
-		left: 50%;
-		top: 4%;
-		font-size: 30upx;
-		font-family: SimHei;
-		float: "right";
-		font-weight: 700;
-	}
-
-	.column4 {
-		position: absolute;
-		left: 87%;
-		top: 4%;
-		float: "right";
-	}
-
-	.clock {
-		display: flex;
-		position: absolute;
-		text-align: center;
-		top: 8%;
-		font-size: 70upx;
-		width: 98%;
-		height: 45%;
-		padding: 0 0 0 29%;
-		margin: 0 1% 0 1%;
-		border-radius: 50rpx;
-		border-width: 5rpx;
-		border-style: solid;
-		align-items: center;
-		border-color: #b7b7b7;
-
-	}
-
-	.buttons {
-		position: absolute;
-		left: 4%;
-		top: 60%;
-		display: flex;
-		// justify-content: space-between;
-	}
-
-	.button1 {
-		height: 150rpx;
-	}
-
-	// .button2 {
-	// 	padding: 25rpx 0 0 0;
-	// 	height: 150rpx;
-	// }
-
-	.button3 {
-		height: 150rpx;
-	}
-
-	.buttons2 {
-		filter: Alpha(opacity=0.3);
-		position: absolute;
-		left: 50%;
-		top: 50%;
-		display: flex;
-	}
+	.column1{
+			/* font-family: SimHei;*/
+			 position: absolute;
+			 top: 2%;
+			 display: flex;
+			 justify-content: flex-start;
+		}
+		.column2{
+			position: absolute;
+			left: 50%;
+			top: 4%;
+			font-size: 30upx;
+			font-family: SimHei;
+			float: "right";
+			font-weight: 700;
+		}
+		.column4{
+			position: absolute;
+			left: 87%;
+			top: 4%;
+			float: "right";
+		}
+			
+		.clock{
+			display: flex;
+			position: absolute;
+			text-align: center;
+			top: 8%;
+			font-size: 70upx;
+			width: 98%;
+			height:45%;
+			padding:0 0 0 29%;
+			margin:0 1% 0 1%;
+			border-radius: 50rpx;
+			border-width: 5rpx;
+			border-style:solid;
+			align-items: center;
+			border-color: #b7b7b7;
+			
+		}
+		.buttons{
+			position: absolute;
+			left: 4%;
+			top: 60%;
+			display: flex;
+			// justify-content: space-between;
+		}
+		.button1{
+			height:150rpx;
+			padding:25rpx 0 0 0;
+			width: 290rpx;
+			left: 24%;
+		}
+		.button3{
+			height:150rpx;
+			width: 300rpx;
+			font-size: 35rpx;
+			//font-weight: 560;
+			left: 76%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			color: blue;
+			border-color: blue;
+			
+	}	
+		.buttons2{
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			display: flex;
+		}
 </style>
