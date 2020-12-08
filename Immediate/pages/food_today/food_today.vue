@@ -1,50 +1,50 @@
 <template>
-	<view class="content">
+		<view class="content">
 
-		<view class="food_today">
-			<view class="uni-common-mt" style="padding:20rpx;">
-				<u-tabs :list="pageList" :is-scroll="false" :current="currentPage" @change="changePage"></u-tabs>
-				<rich-text :nodes="nodes"></rich-text>
+			<view class="food_today">
+				<view class="uni-common-mt" style="padding:20rpx;">
+					<u-tabs :list="pageList" :is-scroll="false" :current="currentPage" @change="changePage"></u-tabs>
+					<rich-text :nodes="nodes"></rich-text>
+				</view>
+
 			</view>
 
-		</view>
+			<view class="food">
 
-		<view class="food">
+				<view class="timebox">
+					<picker :range="years" @change="yearChange" mode="multiSelector" class="time">
+						选择日期：{{ years[0][yearsIndex1] }} 年 {{ years[1][yearsIndex2]  }} 月 {{ years[2][yearsIndex3]  }}日
+					</picker>
+				</view>
 
-			<view class="timebox">
-				<picker :range="years" @change="yearChange" mode="multiSelector" class="time">
-					选择日期：{{ years[0][yearsIndex1] }} 年 {{ years[1][yearsIndex2]  }} 月 {{ years[2][yearsIndex3]  }}日
-				</picker>
+			</view>
+			<view class="cards">
+				<view class="cardbox">
+					<scroll-view scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-Y" @scrolltoupper="upper"
+					 @scrolltolower="lower" @scroll="scroll">
+						<view id='Article'>
+							<u-card  v-for="food in foodList" :key="index1" :title="food.title" :sub-title="food.time" :show-foot="false">
+								<view class="card" slot="body">
+									<u-row class="row1">
+										<u-col class='col' span="9" align="left">
+											<u-icon name="https://ftp.bmp.ovh/imgs/2020/12/153683ddcac4ce1e.png" size="34" :label="food.calories"></u-icon>
+										</u-col>
+									</u-row>
+								</view>
+							</u-card>
+						</view>
+						<u-back-top :scroll-top="scrollTop"></u-back-top>
+					</scroll-view>
+				</view>
+
 			</view>
 
+		
+			<div>
+				<u-tabbar v-model="current" :show="true" :bg-color="bgColor" :border-top="borderTop" :list="list" :inactive-color="inactiveColor"
+				 :activeColor="activeColor"></u-tabbar>
+			</div>
 		</view>
-		<view class="cards">
-			<view class="cardbox">
-				<scroll-view scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-Y" @scrolltoupper="upper"
-				 @scrolltolower="lower" @scroll="scroll">
-					<view id='Article'>
-						<u-card  v-for="food in foodList" :key="index1" :title="food.title" :sub-title="food.time" :show-foot="false">
-							<view class="card" slot="body">
-								<u-row class="row1">
-									<u-col class='col' span="9" align="left">
-										<u-icon name="https://ftp.bmp.ovh/imgs/2020/12/153683ddcac4ce1e.png" size="34" :label="food.calories"></u-icon>
-									</u-col>
-								</u-row>
-							</view>
-						</u-card>
-					</view>
-					<u-back-top :scroll-top="scrollTop"></u-back-top>
-				</scroll-view>
-			</view>
-
-		</view>
-
-		<div>
-			<u-tabbar v-model="current" :show="true" :bg-color="bgColor" :border-top="borderTop" :list="list" :inactive-color="inactiveColor"
-			 :activeColor="activeColor"></u-tabbar>
-		</div>
-
-	</view>
 
 
 </template>
@@ -84,12 +84,14 @@
 					// 	text: '今日食谱'
 					// }]
 				}],
+				bgColor: "#ffffff",
 
 				num1: '能量',
 				fname: "",
 				current: 2,
 				foodList: [],
-				current: 2,
+				currentPage: 0,
+				
 				list: [{
 						iconPath: "https://s3.ax1x.com/2020/11/20/DMMQC4.png",
 						selectedIconPath: "https://s3.ax1x.com/2020/11/20/DMMl8J.png",
@@ -231,6 +233,7 @@
 </script>
 
 <style>
+	
 	.content {
 		display: flex;
 		flex-direction: row;
@@ -281,28 +284,19 @@
 		display: flex;
 		flex-direction: row;
 		width: 100%;
-		justify-content: flex-start;
+		/* justify-content: flex-start; */
 		align-items: flex-start;
 		text-align: center;
 		background-color: rgba(41, 121, 255, 0.5);
 	}
 
 	.cards {
+		margin: 0 0 5% 0;
 		background-color: rgba(41, 121, 255, 0.5);
-		padding: 0 10% 0 0;
+		padding: 0 0 0 0;
 		width:100%;
 	}
 
-/* 	.card {
-		display: flex;
-		flex-direction: column;
-		width: 100%;
-		align-items: center;
-		text-align: center;
-		margin: 0 0 0 0;
-		/* background-color: rgba(149,189,255,0.5); */
-/* 
-	} */
 
 	.number {
 		display: flex;
@@ -336,7 +330,10 @@
 		font-weight: bold;
 
 	}
-
+	.cardbox{
+		margin:0 0 5% 0;
+		
+	}
 	.scroll-Y {
 		height: auto;
 		margin: 0 200% 0 0;
@@ -348,4 +345,5 @@
 		height: 55rpx;
 
 	} */
+	
 </style>
