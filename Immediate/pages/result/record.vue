@@ -29,16 +29,11 @@
 			<view class="paper">
 				<view class="grid-text-time">时间 : {{year}} 年 {{month}} 月 {{day}} 日 </view>
 				<u-grid :col="1" bg-color="grey" v-for="(item,index) in day_list" :key="index">
-				
+
 					<u-grid-item>
-						<view class="grid-text">{{item.type}}:    {{item.consume_calorie}}大卡</view>
+						<view class="grid-text">{{item.type}}: {{item.consume_calorie.toFixed(2)}}大卡</view>
 					</u-grid-item>
 				</u-grid>
-				<!-- <u-grid :col="1" bg-color="grey">
-					<u-grid-item>
-						<view class="grid-text">健康建议:{{advice}}</view>
-					</u-grid-item>
-				</u-grid> -->
 			</view>
 
 			<view class="blank">.
@@ -134,7 +129,6 @@
 		},
 		methods: {
 			change_calendar(e) {
-				console.log(e);
 				// _self.show_calendar = true;
 				_self.year = e.year;
 				_self.month = e.month;
@@ -146,8 +140,6 @@
 			change_card(every_time) {
 
 				_self.day_list = [];
-				// var str = _self.year + "/" + _self.month + "/" + _self.day;
-				console.log(every_time);
 				const db = uniCloud.database();
 				db.collection("exercise_today")
 					.where({
@@ -156,17 +148,16 @@
 					})
 					.get()
 					.then((res) => {
-						if(res.result.data.length > 0){
+						if (res.result.data.length > 0) {
 							for (var i = 0; i < res.result.data.length; i++) {
 								_self.day_list.push({
 									"type": res.result.data[i].type,
 									"consume_calorie": res.result.data[i].consume_calorie
 								})
 							}
-						}
-						else{
+						} else {
 							_self.day_list.push({
-								"type" : "今天没有运动喔",
+								"type": "今天没有运动喔",
 								"consume_calorie": 0
 							});
 						}
@@ -234,10 +225,6 @@
 							Column.categories.push(myDate.getFullYear() + '-' + (myDate.getMonth() + 1) + '-' + myDate.getDate());
 							Column.series[0].data[0] = 0;
 							_self.showColumn("canvasColumn", Column);
-							// uni.showToast({
-							//     title: '请先输入体重',
-							//     duration: 2000
-							// });
 							uni.showModal({
 								title: '提示',
 								content: '暂无数据，开始锻炼吧!',

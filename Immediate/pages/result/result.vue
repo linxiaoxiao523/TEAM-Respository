@@ -1,27 +1,24 @@
 <template>
 	<view class="container">
-		
+
 		<u-tabs :list="listr" :is-scroll="false" :current="currentr" @change="changer">
 		</u-tabs>
-		<!-- 
-		<u-tabbar v-model="current" :show="true" :bg-color="bgColor" :border-top="borderTop" :list="list" :inactive-color="inactiveColor"
-		:active-color="activeColor"></u-tabbar> -->
-	
-		<view class="qiun-charts" >
-			<canvas canvas-id="canvasLineA" id="canvasLineA" class="charts" disable-scroll=true @touchstart="touchLineA" @touchmove="moveLineA" @touchend="touchEndLineA"></canvas>
-<!-- 			<view style="text-align: center;line-height: 30rpx;font-size: 30rpx;">体重变化图</view>
- -->		</view>
+		<view class="qiun-charts">
+			<canvas canvas-id="canvasLineA" id="canvasLineA" class="charts" disable-scroll=true @touchstart="touchLineA"
+			 @touchmove="moveLineA" @touchend="touchEndLineA"></canvas>
+
+		</view>
 		<view class="bigpaper">
 			<view class="subtitle">
 				<text>信息登记表</text>
 			</view>
-		
+
 			<view class="paper">
 				<u-grid :col="2" bg-color="grey">
 					<u-grid-item>
-						<view class="grid-text">开始时间:{{month}}月{{day}}日</view>
-					</u-grid-item>	
-					<u-grid-item>	
+						<view class="grid-text">开始时间:{{day}}</view>
+					</u-grid-item>
+					<u-grid-item>
 						<view class="grid-text">原体重:{{for_weight}} kg</view>
 					</u-grid-item>
 					<u-grid-item>
@@ -31,36 +28,30 @@
 						<view class="grid-text">目标体重:{{goal_weight}} kg</view>
 					</u-grid-item>
 				</u-grid>
-				<!-- <u-grid :col="1" bg-color="grey">
-					<u-grid-item>
-						<view class="grid-text">健康建议:{{advice}}</view>	
-					</u-grid-item>			
-				</u-grid> -->
 			</view>
-			
+
 			<view class="blank">.
 			</view>
-			
+
 		</view>
-	
+
 		<view>
 			<u-tabbar v-model="current" :show="true" :bg-color="bgColor" :border-top="borderTop" :list="list" :inactive-color="inactiveColor"
-			:activeColor="activeColor"></u-tabbar>
+			 :activeColor="activeColor"></u-tabbar>
 		</view>
 	</view>
 </template>
 <script>
 	import uCharts from '@/js_sdk/u-charts/u-charts/u-charts.js';
 	var _self;
-	var canvaLineA=null;
+	var canvaLineA = null;
 	export default {
 		data() {
 			return {
-				cWidth:'',
-				cHeight:'',
-				pixelRatio:1,
-				month: 11,
-				day: 30,
+				cWidth: '',
+				cHeight: '',
+				pixelRatio: 1,
+				day: 0,
 				for_weight: 80,
 				now_weight: 75,
 				goal_weight: 72,
@@ -109,8 +100,8 @@
 		},
 		onLoad() {
 			_self = this;
-			this.cWidth=uni.upx2px(750);
-			this.cHeight=uni.upx2px(500);
+			this.cWidth = uni.upx2px(750);
+			this.cHeight = uni.upx2px(500);
 			this.getServerData();
 		},
 		methods: {
@@ -129,105 +120,110 @@
 					});
 				}
 			},
-			getServerData(){
+			getServerData() {
 				let LineA = {
-				  "categories": [],
-				  "series": [{
-					"name": "体重变化图",
-					"data": []
-				  }]
+					"categories": [],
+					"series": [{
+						"name": "体重变化图",
+						"data": []
+					}]
 				};
 				var myDate = new Date();
 				const db = uniCloud.database();
 				db.collection("user_weight")
-					.orderBy('time','asc')
+					.orderBy('time', 'asc')
 					.where({
 						user_openid: getApp().globalData.user_openid
 					})
 					.get()
 					.then((res) => {
-						if(res.result.data.length > 0){
-							for(var i = 0; i < res.result.data.length; i++){
+						if (res.result.data.length > 0) {
+							this.day = res.result.data[0].time;
+							this.for_weight = res.result.data[0].weight;
+							var i = 0;
+							for (i = 0; i < res.result.data.length; i++) {
 								LineA.categories[i] = res.result.data[i].time;
 								LineA.series[0].data[i] = res.result.data[i].weight;
-							} 
-							_self.showLineA("canvasLineA",LineA);
-						}
-						else{
+							}
+							i--;
+							this.now_weight = res.result.data[i].weight;
+							this.goal_weight = res.result.data[i].wish_weight;
+							_self.showLineA("canvasLineA", LineA);
+
+						} else {
 							var str = myDate.getFullYear() + '-' + (myDate.getMonth() + 1) + '-' + myDate.getDate()
-							console.log(str);
 							LineA.categories.push(myDate.getFullYear() + '-' + (myDate.getMonth() + 1) + '-' + myDate.getDate());
 							LineA.series[0].data[0] = 0;
-							_self.showLineA("canvasLineA",LineA);
-							// uni.showToast({
-							//     title: '请先输入体重',
-							//     duration: 2000
-							// });
+							_self.showLineA("canvasLineA", LineA);
 							uni.showModal({
-							    title: '提示',
-							    content: '请先输入身高体重哦!',
-							    success: function (res) {
-							        if (res.confirm) {
-							            console.log('用户点击确定');
+								title: '提示',
+								content: '请先输入身高体重哦!',
+								success: function(res) {
+									if (res.confirm) {
+										console.log('用户点击确定');
 										// 页面跳转
-							        } else if (res.cancel) {
-							            console.log('用户点击取消');
-							        }
-							    }
+									} else if (res.cancel) {
+										console.log('用户点击取消');
+									}
+								}
 							});
-		
+
 						}
 					})
-				
-				
+
+
 				// LineA.categories=res.data.data.LineA.categories;
 				// LineA.series=res.data.data.LineA.series;
 				// _self.showLineA("canvasLineA",LineA);
-			}, 
-			showLineA(canvasId,chartData){
-				canvaLineA=new uCharts({
-					$this:_self,
+			},
+			showLineA(canvasId, chartData) {
+				canvaLineA = new uCharts({
+					$this: _self,
 					canvasId: canvasId,
 					type: 'line',
-					fontSize:11,
-					legend:{show:true},
-					dataLabel:false,
-					dataPointShape:true,
-					background:'#FFFFFF',
-					pixelRatio:_self.pixelRatio,
+					fontSize: 11,
+					legend: {
+						show: true
+					},
+					dataLabel: false,
+					dataPointShape: true,
+					background: '#FFFFFF',
+					pixelRatio: _self.pixelRatio,
 					categories: chartData.categories,
 					series: chartData.series,
 					animation: true,
 					xAxis: {
-						disableGrid:false,
-						type:'grid',
-						gridColor:'#CCCCCC',
-						gridType:'dash',
-						itemCount:6,
-						scrollShow:true,
-						scrollAlign:'right',
-						dashLength:8
+						disableGrid: false,
+						type: 'grid',
+						gridColor: '#CCCCCC',
+						gridType: 'dash',
+						itemCount: 6,
+						scrollShow: true,
+						scrollAlign: 'right',
+						dashLength: 8
 					},
 					yAxis: {
-						gridType:'dash',
-						gridColor:'#CCCCCC',
-						dashLength:8,
-						splitNumber:5,
-						min:0,
-						max:80,
-						format:(val)=>{return val.toFixed(0)+'kg'}
+						gridType: 'dash',
+						gridColor: '#CCCCCC',
+						dashLength: 8,
+						splitNumber: 5,
+						min: 0,
+						max: 80,
+						format: (val) => {
+							return val.toFixed(0) + 'kg'
+						}
 					},
-					width: _self.cWidth*_self.pixelRatio,
-					height: _self.cHeight*_self.pixelRatio,
+					width: _self.cWidth * _self.pixelRatio,
+					height: _self.cHeight * _self.pixelRatio,
 					extra: {
-						line:{
+						line: {
 							type: 'straight'
 						}
 					}
 				});
-				
+
 			},
-			touchLineA(e){
+			touchLineA(e) {
 				canvaLineA.scrollStart(e);
 			},
 			moveLineA(e) {
@@ -237,8 +233,8 @@
 				canvaLineA.scrollEnd(e);
 				//下面是toolTip事件，如果滚动后不需要显示，可不填写
 				canvaLineA.showToolTip(e, {
-					format: function (item, category) {
-						return category + ' ' + item.name + ':' + item.data 
+					format: function(item, category) {
+						return category + ' ' + item.name + ':' + item.data
 					}
 				});
 			}
@@ -252,65 +248,71 @@
 		text-align: left;
 		font-size: 25rpx;
 		margin-top: 4rpx;
-		
+
 	}
+
 	.qiun-charts {
 		width: 750upx;
 		height: 500upx;
 		background-color: #FFFFFF;
-		
+
 	}
+
 	.charts {
 		width: 750upx;
 		height: 500upx;
 		background-color: #FFFFFF;
 	}
-	.u-tabs{
+
+	.u-tabs {
 		//height:50px;
 		//opacity:0.2;
 		//border-bottom:1px solid  #000000;
 		//border-top:1px solid  #000000;
 	}
-	.u-tabbar{
-		height:0px;
-		//opacity:0.2;
-		
 
-	} 
-	.container{
+	.u-tabbar {
+		height: 0px;
+		//opacity:0.2;
+
+
+	}
+
+	.container {
 		// background: linear-gradient(0deg, #5899ee, white,white,white);
 		//margin-bottom: 100%;
 		//border-bottom:1px solid  #000000;
-		border-top:5rpx solid #2979ff;
-		 height:auto;
+		border-top: 5rpx solid #2979ff;
+		height: auto;
 		// margin-bottom: 170%;
-		}
-	.bigpaper{
-		background: linear-gradient(0deg, #2979ff, white);
-		margin:0 0 -100% 0;
-		// border-radius: 20rpx;
-		
 	}
-	
-	
-	
-	.paper{
-		margin:14% 4% 0% 4%;
-		padding:-10% 2% 0% 2%;
+
+	.bigpaper {
+		background: linear-gradient(0deg, #2979ff, white);
+		margin: 0 0 -100% 0;
+		// border-radius: 20rpx;
+
+	}
+
+
+
+	.paper {
+		margin: 14% 4% 0% 4%;
+		padding: -10% 2% 0% 2%;
 		border-radius: 30rpx;
 		position: relative;
 		border-color: rgba($color: #FFFFFF, $alpha: 0.5);
-		border-style:solid;
-		border-width:20rpx;
-		border-height:auto;
-		
+		border-style: solid;
+		border-width: 20rpx;
+		border-height: auto;
+
 	}
-	.subtitle{
+
+	.subtitle {
 		text-align: center;
 		font-size: 40rpx;
 		color: blue($color: #000000);
-		font-weight:500;
-		
+		font-weight: 500;
+
 	}
-	
 </style>

@@ -38,24 +38,7 @@
 				let that = this;
 				uni.login({
 					success: res => {
-						//code值(5分钟失效)
-						console.info(res.code);
 						that.code = res.code
-						//小程序appid
-						// let appid = 'wxcb70e32f42968687'; //我瞎写的
-						// //小程序secret
-						// let secret = '26e5c9d1b35ac21df0c0c9600886a266'; //我瞎写的
-						// //wx接口路径
-						// let url = 'https://api.weixin.qq.com/sns/jscode2session?appid=' + appid + '&secret=' + secret + '&js_code=' +
-						// 	res.code + '&grant_type=authorization_code';
-
-						// uni.request({
-						// 	url: url, // 请求路径
-						// 	method: 'GET', //请求方式
-						// 	success: result => {
-						// 		//响应成功
-						// 		//这里就获取到了openid了
-
 						uniCloud.callFunction({
 								name: 'login',
 								data: {
@@ -69,10 +52,7 @@
 									provider: 'weixin',
 									success: function(wxLoginres) {
 										let nickName = wxLoginres.userInfo.nickName;
-										// let openid = wxLoginres.userInfo.openid
 										let avatarUrl = wxLoginres.userInfo.avatarUrl;
-										// let sex = wxLoginres.userInfo.gender;
-										// console.log(sex);
 										const db = uniCloud.database();
 										db.collection('user')
 											.where({
