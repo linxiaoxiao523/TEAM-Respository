@@ -90,7 +90,6 @@
 				fname: "",
 				current: 2,
 				foodList: [],
-				currentPage: 0,
 				
 				list: [{
 						iconPath: "https://s3.ax1x.com/2020/11/20/DMMQC4.png",
