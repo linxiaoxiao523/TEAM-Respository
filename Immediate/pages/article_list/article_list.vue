@@ -2,15 +2,15 @@
 	<div>
 		<!-- 吸顶 搜索框 -->
 
-		<u-sticky>
+<!-- 		<u-sticky>
 			<view class="topback">
 				<u-row>
 					<u-search v-model="keyword" @change="change" @custom="custom" @search="search" :shape="shape" :clearabled="clearabled"
 					 :show-action="showAction" :input-align="inputAlign" @clear="clear"></u-search>
-				</u-row>
+				</u-row> -->
 				<!-- 			<view class="topdot"> .</view> -->
-			</view>
-		</u-sticky>
+<!-- 			</view>
+		</u-sticky> -->
 
 
 

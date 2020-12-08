@@ -64,7 +64,7 @@
 				}, {
 					name: '个人'
 				}],
-				current: 2,
+				current: 3,
 				list: [{
 						iconPath: "https://s3.ax1x.com/2020/11/20/DMMQC4.png",
 						selectedIconPath: "https://s3.ax1x.com/2020/11/20/DMMl8J.png",

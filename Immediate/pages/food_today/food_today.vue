@@ -106,7 +106,7 @@
 						pagePath: "/pages/clock/clock" //锻炼页面地址
 					},
 					{
-						iconPath: "https://s3.ax1x.com/2020/11/20/DMMK5F.png",
+						iconPath: "https://s3.ax1x.com/2020/11/20/DMMGK1.png",
 						selectedIconPath: "https://s3.ax1x.com/2020/11/20/DMMGK1.png",
 						text: '食谱',
 						customIcon: false,
