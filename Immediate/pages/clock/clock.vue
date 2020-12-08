@@ -202,7 +202,7 @@
 					if (this.flag1 === 0) {
 						this.show = false;
 						this.flag1 = 1;
-						this.state = "时间暂停";
+						this.state = "暂停计时";
 						this.start();
 					} else {
 						this.flag1 = 0;
@@ -245,6 +245,7 @@
 			todb() {
 				this.show = false;
 				this.show1 = true;
+				this.state = "开始计时";
 				// 运动时间传给后端
 				if (this.calorie1 != 0) {
 					var app = getApp();
